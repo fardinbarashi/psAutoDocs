@@ -8,7 +8,6 @@ psAutoDocs: Entra-Inventory, A solution for exporting Entra ID configurations an
 
 Visualizing
 - svg
-- vsdx
 
 Documenting
 - Word
@@ -57,6 +56,7 @@ Documenting
 ---
 ## Roadmap
 ```
+Vsdx support
 PDF support
 Automated documentation of Windows Servers, installed roles, and configurations.
 ```
