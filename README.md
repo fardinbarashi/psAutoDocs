@@ -1,12 +1,25 @@
 # psAutoDocs
 ![](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/img/logo.png)
+```
+psAutoDocs: Entra-Inventory, A solution for exporting Entra ID configurations and relationships
+- Csv
+- Json
+- Excel
 
+Visualizing
+- svg
+- vsdx
 
+Documenting
+- Word
+- Excel
+```
+---
 ## News :
 
 ```
 ```
-
+---
 ## System requirements :
 ### Runtime
 ```
@@ -35,16 +48,17 @@
 ```
 
 
-
+---
 
 ## PerformanceNotes
 ```
 
 ```
-
+---
 ## Roadmap
 ```
-
+PDF support
+Automated documentation of Windows Servers, installed roles, and configurations.
 ```
 
 
