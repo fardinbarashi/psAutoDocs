@@ -1,64 +1,178 @@
 # psAutoDocs
 ![](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/img/logo.png)
-```
-psAutoDocs: Entra-Inventory, A solution for exporting Entra ID configurations and relationships
-- Csv
-- Json
-- Excel
+![](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/gui1.jpg)
+![](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/Excel%20dashboard.jpg)
+![](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/data-mock%20(Lab%20Contoso)/svg/EntraID%20-%20Hub%202026-08-02_20.01.53.svg) 
 
-Visualizing
-- svg
-
-Documenting
-- Word
-- Excel
-```
----
-## News :
-
-```
-```
----
-## System requirements :
-### Runtime
-```
-| Requirement | Detail |
-|-------------|--------|
-| PowerShell | 7.4.0 or later (Core).
-```
-
-
----
+> **Status: beta.** Autodoc is under active development — 
+Word and Visio output aren't finished yet, and things may change between versions.
 
 ## Table of Contents
+- [About](#about)
+- [Notes](#notes)
+- [Performance notes](#performance-notes)
 - [News](#news)
-- [System requirements](#system)
-- [Features](#features)
-- [Performance Notes](#performancenotes)
+- [System requirements](#system-requirements)
+- [How it works](#how-it-works)
+- [Project layout](#project-layout)
+- [Screenshots](#screenshots)
 - [Roadmap](#roadmap)
 
 ---
+Automated documentation for 
 
-## Features
+- **Microsoft Entra ID**.
+```
+Autodoc connects to Microsoft Graph, exports a read-only snapshot of a tenant's
+configuration as JSON, and turns that snapshot into ready-to-share
+documentation: 
+- an Excel KPI workbook ( Excel KPI only works in microsoft excel. ) 
+  dashboard plus one analysed sheet per area (users,
+  groups, licenses, Conditional Access, app registrations, enterprise apps,
+  RBAC) with charts and cards
+  
+- SVG maps
+  Vector diagrams of the tenant, each self-contained (open in a
+  browser): a one-page hub overview, an overview tree, and per-area maps for
+  users, groups, group owners, RBAC (roles and matrix), licenses, Conditional
+  Access, app registrations, enterprise apps, domains, self-service password
+  reset (SSPR), and service limits.
+  
+- PDF ( copies of svg ) 
 
+> All Graph access is read-only
+  What gets collected: 
+  Tenant information and domains, licenses (subscribed SKUs), users, groups
+  (several views plus members and welcome-email settings), app registrations,
+  enterprise applications, Conditional Access policies, RBAC role assignments,
+  and self-service password reset (SSPR) configuration
+
+  How it works
+  Autodoc has two steps:
+   1. Collect (Download Data) – connects to Microsoft Graph and pulls each
+   selected dataset into a timestamped export folder under
+   Entra\files\exports\, as JSON (and CSV, and per-area Excel).
+   2. Report (Generate Documents) – builds the chosen formats (Excel KPI, SVG,…) 
+   from the JSON in an existing export. No Graph calls are needed for this
+   step, so you can regenerate documents any time without touching the tenant.
+
+   Output structure
+   Each export folder (Entra\files\exports\<timestamp>\) contains only the
+   ub-folders that were produced:
+   <export>\
+    json\            Raw Graph data, one file per area (the source of masterdata for the script)
+    csv\             Raw Graph data, The same data as json
+    excel\           Raw Graph data, Per-area workbooks (raw data)
+    tenantsummary\   A short high-level summary
+   
+    excelkpi\        The KPI workbook (dashboard, charts, analysed sheets)
+    svg\             Vector maps (each map self-contained; has its own README)
+    pdf\             PDF copies of the svg-maps
+
+    README.md        Describes every folder and documents each JSON file
+   
+   visio\           Visio drawings (not implemented yet)
+   word\            Word report (not implemented yet)
 
 ```
+---
+## Notes
 
-```
+---
+## Performance notes
+When downloading data
+- **Users, Groups and App registrations are the heavy sections** and can take a
+  while on large tenants.
+- **Groups runs faster when Users is selected too**, because it reuses the user
+  data already collected instead of querying each member again.
+- The **Report** step never calls Graph — once an export exists you can rebuild
+  documents as often as you like without re-collecting.
+
+SVG data
+- In large tenants the **Overview tree** map can get very tall; open it in
+  **Firefox** for the smoothest rendering. 
+---
+
+## News
+---
+
+## System requirements
+### Runtime
+
+| Requirement | Detail |
+|-------------|--------|
+| PowerShell | 7.4.0 or later (Core) |
+| PowerShell modules | `ImportExcel` and the `Microsoft.Graph.*` modules below (installed automatically if missing) |
+
+### Modules
+`ImportExcel`, `Microsoft.Graph.Authentication`,
+`Microsoft.Graph.Identity.DirectoryManagement`, `Microsoft.Graph.Groups`,
+`Microsoft.Graph.Users`, `Microsoft.Graph.Applications`,
+`Microsoft.Graph.Identity.SignIns`, `Microsoft.Graph.Identity.Governance`,
+`Microsoft.Graph.Security`, `Microsoft.Graph.Reports`,
+`Microsoft.Graph.Beta.Reports`.
+
+### Graph scopes (read-only)
+All requested scopes are `*.Read.All`, for example `Directory.Read.All`,
+`Group.Read.All`, `User.Read.All`, `Application.Read.All`, `Policy.Read.All`,
+`RoleManagement.Read.Directory`, `Domain.Read.All`, `Organization.Read.All`,
+`Reports.Read.All`, `AuditLog.Read.All`, `UserAuthenticationMethod.Read.All`.
 
 
 ---
 
-## PerformanceNotes
-```
+## Getting started
+```powershell
+git clone https://github.com/fardinbarashi/psAutoDocs.git
+cd psAutoDocs
+# Launch the interface (sign in when prompted)
 
 ```
+The first run signs you in to Microsoft Graph with `Connect-MgGraph` and the
+read-only scopes above. Pick the datasets on **Download Data**, run the collect,
+then switch to **Generate Documents**, tick the formats you want, and click Run.
+
 ---
+
+## Project layout
+```
+Autodoc.ps1                 Launcher (GUI + CLI dispatcher)
+Config\CollectorPicker.xaml The WPF interface
+Entra\
+   Config\                  Settings, paths
+   Functions\
+      Core\                 Collect/report orchestration, Graph connect, registry
+      Groups\ Users\ ...    Per-area collectors
+      Reports\
+         Excel\             KPI workbook and sheets
+         Visio\Svg\         SVG map builders
+         Word\              Word templates + resolver (builder in progress)
+         Common\            Shared helpers (KPI, limits, PDF, glossary)
+   Settings\                Word templates, script settings
+   files\                   Cache and exports
+```
+---
+## Screenshots
+
+### Excel
+![Link](https://github.com/fardinbarashi/psAutoDocs/tree/main/githubRepoContentDeleteIfYouWant/screenshots)
+  
+### SVG
+ 
+![Link](https://github.com/fardinbarashi/psAutoDocs/tree/main/githubRepoContentDeleteIfYouWant/data-mock%20(Lab%20Contoso)/svg)
+
+---
+
 ## Roadmap
-```
-Vsdx support
-PDF support
-Automated documentation of Windows Servers, installed roles, and configurations.
-```
+- Implement **Visio** map export .
+- Implement the **Word** system-documentation.
+- Automated documentation of **Windows Servers** — installed roles and
+  configurations.
+
+
+---
+
+## Author
+**Fardin Barashi** — <https://github.com/fardinbarashi/psAutoDocs>
 
 
