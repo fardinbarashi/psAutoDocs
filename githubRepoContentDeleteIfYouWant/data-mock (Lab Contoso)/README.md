@@ -1,6 +1,6 @@
 # Autodoc export - data-mock (Lab Contoso)
 
-Generated: 2026-08-02 20:00
+Generated: 2026-08-02 22:22
 Tenant: Lab Contoso  (labcontoso.onmicrosoft.com)
 
 This folder is a single export - one point-in-time pull of the tenant. Everything here (CSV, Excel, maps) is built from the raw JSON in the `json\` sub-folder, so the JSON is the source of truth.
@@ -10,6 +10,7 @@ This folder is a single export - one point-in-time pull of the tenant. Everythin
 - **json\** - Raw data pulled from Microsoft Graph, one file per area (each file is documented below).
 - **excelkpi\** - The KPI workbook "KPI <stamp>.xlsx": dashboard, charts and one analysed sheet per area.
 - **svg\** - Vector maps of the tenant (open in a web browser). That folder has its own README.
+- **pdf\** - PDF copies of every SVG map, gathered in one place for sharing or printing.
 
 ## JSON files (json\)
 

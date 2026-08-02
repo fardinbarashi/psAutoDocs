@@ -1,0 +1,5 @@
+# Tillgängliga platshållare: {TotalUsers} {Members} {Guests} {EnabledUsers} {DisabledUsers} {UsersWithoutMailbox} {UsersMultiAuth}
+# Redigera texten fritt. Behåll {platshållare} där du vill att siffrorna ska visas.
+# Rader som börjar med # är kommentarer och ignoreras.
+
+Miljön innehåller {TotalUsers} användarkonton, varav {Members} är medlemmar och {Guests} är gäster. {EnabledUsers} konton är aktiverade och {DisabledUsers} är inaktiverade. {UsersWithoutMailbox} användare saknar postlåda, och {UsersMultiAuth} har fler än en registrerad autentiseringsmetod.

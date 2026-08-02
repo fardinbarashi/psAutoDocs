@@ -1,0 +1,5 @@
+# Available placeholders: {TotalGroups} {SecurityGroups} {M365Groups} {DynamicGroups} {CloudGroups} {OnPremisesGroups}
+# Edit this text freely. Keep the {placeholders} where you want the numbers to appear.
+# Lines starting with # are comments and are ignored.
+
+There are {TotalGroups} groups in total: {SecurityGroups} security groups and {M365Groups} Microsoft 365 groups. {DynamicGroups} use dynamic membership. By source, {CloudGroups} are cloud-only and {OnPremisesGroups} are synced from on-premises Active Directory.

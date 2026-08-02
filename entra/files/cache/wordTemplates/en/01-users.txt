@@ -1,0 +1,5 @@
+# Available placeholders: {TotalUsers} {Members} {Guests} {EnabledUsers} {DisabledUsers} {UsersWithoutMailbox} {UsersMultiAuth}
+# Edit this text freely. Keep the {placeholders} where you want the numbers to appear.
+# Lines starting with # are comments and are ignored.
+
+The environment contains {TotalUsers} user accounts, of which {Members} are members and {Guests} are guests. {EnabledUsers} accounts are enabled and {DisabledUsers} are disabled. {UsersWithoutMailbox} users have no mailbox, and {UsersMultiAuth} have more than one registered authentication method.

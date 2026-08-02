@@ -30,7 +30,6 @@ function Build-EnterpriseAppMapSvg {
     # Enterprise-app cards use the dedicated service icon file
     # (files\cache\Azure icons\Svg\10225-icon-service-Enterprise-Applications.svg),
     # resolved by its file name via the SVG-preferred icon index.
-    $appIcon    = Get-MapIcon -IconSet $iconSet -Sku '10225-icon-service-Enterprise-Applications' -IconMap $iconMap -PreferSvg
 
     # Wrap a value to lines that fit a given width (inches) at a font size,
     # breaking on natural separators (space ; , / _ @ -) and hard-splitting any
@@ -189,7 +188,7 @@ function Build-EnterpriseAppMapSvg {
     foreach ($card in $cards) {
         $ci = 0; for ($c = 1; $c -lt $cols; $c++) { if ($colTop[$c] -gt $colTop[$ci]) { $ci = $c } }
         $cy = $colTop[$ci] - $card.Height / 2
-        $shapes += @{ Id="ent$idx"; Kind='Rectangle'; Lines=$card.Lines; LinesTop=$true; TopInset=0.12; Icon=$appIcon
+        $shapes += @{ Id="ent$idx"; Kind='Rectangle'; Lines=$card.Lines; LinesTop=$true; TopInset=0.12
                       X=$colX[$ci]; Y=$cy; W=$cardW; H=$card.Height; Fill=$card.Fill; Line=$card.Edge; FontSize=8 }
         $colTop[$ci] = $colTop[$ci] - $card.Height - $cardGapY
         $idx++

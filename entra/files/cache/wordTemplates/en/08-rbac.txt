@@ -1,0 +1,5 @@
+# Available placeholders: {DistinctRoles} {TotalAssignments} {ActiveAssignments} {EligibleAssignments} {PrivilegedAssignments} {PrincipalsWithMultipleRoles}
+# Edit this text freely. Keep the {placeholders} where you want the numbers to appear.
+# Lines starting with # are comments and are ignored.
+
+Directory roles are held through {TotalAssignments} assignments across {DistinctRoles} distinct roles - {ActiveAssignments} active and {EligibleAssignments} eligible. {PrivilegedAssignments} of these are privileged-role assignments, and {PrincipalsWithMultipleRoles} principals hold more than one role.

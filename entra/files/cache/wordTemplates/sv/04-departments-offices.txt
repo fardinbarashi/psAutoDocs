@@ -1,0 +1,5 @@
+# Tillgängliga platshållare: {DepartmentCount} {OfficeCount}
+# Redigera texten fritt. Behåll {platshållare} där du vill att siffrorna ska visas.
+# Rader som börjar med # är kommentarer och ignoreras.
+
+Användare och grupper fördelas över {DepartmentCount} avdelningar och {OfficeCount} kontor i organisationen.

@@ -1,0 +1,5 @@
+# Tillgängliga platshållare: {DistinctRoles} {TotalAssignments} {ActiveAssignments} {EligibleAssignments} {PrivilegedAssignments} {PrincipalsWithMultipleRoles}
+# Redigera texten fritt. Behåll {platshållare} där du vill att siffrorna ska visas.
+# Rader som börjar med # är kommentarer och ignoreras.
+
+Katalogroller innehas genom {TotalAssignments} tilldelningar över {DistinctRoles} olika roller - {ActiveAssignments} aktiva och {EligibleAssignments} berättigade. {PrivilegedAssignments} av dessa är tilldelningar av privilegierade roller, och {PrincipalsWithMultipleRoles} principaler innehar mer än en roll.

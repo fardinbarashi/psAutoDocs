@@ -11,16 +11,6 @@
       .\Autodoc.ps1 -All -Formats Excel    # collect everything, Excel output only
       .\Autodoc.ps1 -Mode Report           # step 2: build Excel charts from latest export
 
-    Notes on the sections (kept here rather than in the GUI):
-      - Users, Groups and App registrations are the heavy sections; they can
-        take a while on large tenants.
-      - Groups runs faster when Users is selected too, because it reuses the
-        user data already collected instead of querying each member again.
-      - Licenses covers the subscribed SKU inventory: enabled, consumed and
-        free units per SKU.
-      - Consolidated summary summarises whatever else ran in the same run, so
-        keep it last in the list.
-
     Author : Fardin Barashi
     GitHub : https://github.com/fardinbarashi/psAutoDocs
     Requires -Version 7.4

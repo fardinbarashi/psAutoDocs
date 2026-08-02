@@ -1,0 +1,5 @@
+# Available placeholders: {TenantName} {PrimaryDomain} {Environment} {GeneratedDate} {TotalUsers} {TotalGroups} {TotalLicenceSkus} {TotalAppRegistrations} {TotalEnterpriseApps} {TotalDomains}
+# Edit this text freely. Keep the {placeholders} where you want the numbers to appear.
+# Lines starting with # are comments and are ignored.
+
+This document describes the Microsoft Entra ID environment of {TenantName} ({PrimaryDomain}). The tenant runs a {Environment} setup and was documented on {GeneratedDate}. At a high level it holds {TotalUsers} user accounts, {TotalGroups} groups, {TotalLicenceSkus} licence types, {TotalAppRegistrations} app registrations, {TotalEnterpriseApps} enterprise applications and {TotalDomains} verified domains.

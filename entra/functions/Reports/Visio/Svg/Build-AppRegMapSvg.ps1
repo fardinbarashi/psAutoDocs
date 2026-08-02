@@ -32,7 +32,6 @@ function Build-AppRegMapSvg {
     # App-registration cards use the dedicated service icon file
     # (files\cache\Azure icons\Svg\10232-icon-service-App-Registrations.svg),
     # resolved by its file name via the SVG-preferred icon index.
-    $appIcon    = Get-MapIcon -IconSet $iconSet -Sku '10232-icon-service-App-Registrations' -IconMap $iconMap -PreferSvg
 
     function Get-HealthFill([string]$h) {
         switch ($h) {
@@ -201,7 +200,7 @@ function Build-AppRegMapSvg {
     foreach ($card in $cards) {
         $ci = 0; for ($c = 1; $c -lt $cols; $c++) { if ($colTop[$c] -gt $colTop[$ci]) { $ci = $c } }
         $cy = $colTop[$ci] - $card.Height / 2
-        $shapes += @{ Id="app$idx"; Kind='Rectangle'; Lines=$card.Lines; LinesTop=$true; TopInset=0.12; Icon=$appIcon
+        $shapes += @{ Id="app$idx"; Kind='Rectangle'; Lines=$card.Lines; LinesTop=$true; TopInset=0.12
                       X=$colX[$ci]; Y=$cy; W=$cardW; H=$card.Height; Fill=$card.Fill; Line=$card.Edge; FontSize=8 }
         $colTop[$ci] = $colTop[$ci] - $card.Height - $cardGapY
         $idx++

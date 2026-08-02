@@ -1,0 +1,5 @@
+# Available placeholders: {TotalEnterpriseApps} {SsoConfigured} {WithoutSso}
+# Edit this text freely. Keep the {placeholders} where you want the numbers to appear.
+# Lines starting with # are comments and are ignored.
+
+The tenant has {TotalEnterpriseApps} enterprise applications (service principals). Single sign-on is configured on {SsoConfigured} of them, while {WithoutSso} have no SSO configured.

@@ -1,0 +1,5 @@
+# Tillgängliga platshållare: {TotalPolicies} {EnabledPolicies} {ReportOnlyPolicies} {DisabledPolicies}
+# Redigera texten fritt. Behåll {platshållare} där du vill att siffrorna ska visas.
+# Rader som börjar med # är kommentarer och ignoreras.
+
+{TotalPolicies} principer för villkorsstyrd åtkomst är konfigurerade: {EnabledPolicies} aktiverade, {ReportOnlyPolicies} i endast-rapportläge och {DisabledPolicies} inaktiverade.
