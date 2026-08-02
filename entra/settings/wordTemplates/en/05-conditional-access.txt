@@ -1,0 +1,5 @@
+# Available placeholders: {TotalPolicies} {EnabledPolicies} {ReportOnlyPolicies} {DisabledPolicies}
+# Edit this text freely. Keep the {placeholders} where you want the numbers to appear.
+# Lines starting with # are comments and are ignored.
+
+{TotalPolicies} Conditional Access policies are configured: {EnabledPolicies} enabled, {ReportOnlyPolicies} in report-only mode and {DisabledPolicies} disabled.

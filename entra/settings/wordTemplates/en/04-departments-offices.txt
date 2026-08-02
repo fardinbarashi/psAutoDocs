@@ -1,0 +1,5 @@
+# Available placeholders: {DepartmentCount} {OfficeCount}
+# Edit this text freely. Keep the {placeholders} where you want the numbers to appear.
+# Lines starting with # are comments and are ignored.
+
+Users and groups span {DepartmentCount} departments and {OfficeCount} office locations across the organisation.

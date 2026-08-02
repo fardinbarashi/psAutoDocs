@@ -1,0 +1,5 @@
+# Tillgängliga platshållare: {TotalEnterpriseApps} {SsoConfigured} {WithoutSso}
+# Redigera texten fritt. Behåll {platshållare} där du vill att siffrorna ska visas.
+# Rader som börjar med # är kommentarer och ignoreras.
+
+Miljön har {TotalEnterpriseApps} företagsapplikationer (tjänstprinciper). Enkel inloggning är konfigurerad på {SsoConfigured} av dem, medan {WithoutSso} saknar SSO.

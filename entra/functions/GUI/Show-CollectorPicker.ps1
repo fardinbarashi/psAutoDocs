@@ -1,0 +1,150 @@
+function Show-CollectorPicker {
+    <#
+        Shows the Autodoc window (layout in Entra\Config\CollectorPicker.xaml).
+        The window STAYS OPEN after Run so several actions can be performed in
+        one session; close it with the Close button or the window X.
+
+        The active tab decides the action passed to -OnRun:
+          Download Data       -> @{ Action='Collect'; Collectors=@(); Formats=@() }
+          Generate Documents  -> @{ Action='ReportDocs'; Formats=@(ticked); SourceFolder=... }
+
+        NOTE: the work runs on the UI thread, so the window is unresponsive while
+        a job is running (progress is written to the console). It becomes usable
+        again when the run finishes.
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)]$Registry,
+        [Parameter(Mandatory)][scriptblock]$OnRun,
+        [string]$ExportsRoot,
+        [string]$XamlPath
+    )
+
+    Add-Type -AssemblyName PresentationFramework
+
+    # The window is application-level rather than Entra-specific, so the layout
+    # lives in the project root's Config folder: three levels up from
+    # Entra\Functions\GUI.
+    if (-not $XamlPath) {
+        $projectRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $PSScriptRoot))
+        $XamlPath    = Join-Path $projectRoot 'Config\CollectorPicker.xaml'
+    }
+    if (-not (Test-Path $XamlPath)) { throw "XAML layout not found: $XamlPath" }
+
+    [xml]$xaml = Get-Content -Path $XamlPath -Raw
+    $reader = New-Object System.Xml.XmlNodeReader $xaml
+    $window = [Windows.Markup.XamlReader]::Load($reader)
+
+    $tabs   = $window.FindName('ActionTabs')
+    $list   = $window.FindName('CollectorList')
+    $status = $window.FindName('StatusText')
+
+    # One checkbox per collector, driven by the registry
+    foreach ($def in $Registry) {
+        $cb = New-Object System.Windows.Controls.CheckBox
+        $cb.IsChecked = $true
+        $cb.Tag       = $def.Key
+        $cb.Margin    = [System.Windows.Thickness]::new(0, 6, 0, 6)
+
+        $stack = New-Object System.Windows.Controls.StackPanel
+        $title = New-Object System.Windows.Controls.TextBlock
+        $title.Text       = $def.Name
+        $title.FontWeight = [System.Windows.FontWeights]::SemiBold
+        $desc = New-Object System.Windows.Controls.TextBlock
+        $desc.Text        = $def.Description
+        $desc.Foreground  = [System.Windows.Media.Brushes]::Gray
+        $desc.TextWrapping = [System.Windows.TextWrapping]::Wrap
+        $stack.Children.Add($title) | Out-Null
+        $stack.Children.Add($desc)  | Out-Null
+        $cb.Content = $stack
+
+        $list.Children.Add($cb) | Out-Null
+    }
+
+    # --- report source folder: newest export preselected, Browse for anything else ---
+    $sourceCombo = $window.FindName('SourceFolders')
+    if ($ExportsRoot -and (Test-Path $ExportsRoot)) {
+        foreach ($folder in (Get-ChildItem -Path $ExportsRoot -Directory | Sort-Object Name -Descending)) {
+            $null = $sourceCombo.Items.Add($folder.FullName)
+        }
+    }
+    if ($sourceCombo.Items.Count -gt 0) { $sourceCombo.SelectedIndex = 0 }   # latest
+    else { $null = $sourceCombo.Items.Add('(no exports found - run a collection first)'); $sourceCombo.SelectedIndex = 0 }
+
+    $window.FindName('BtnBrowse').Add_Click({
+        Add-Type -AssemblyName System.Windows.Forms
+        $dialog = New-Object System.Windows.Forms.FolderBrowserDialog
+        $dialog.Description = 'Select the export folder to build the report from'
+        if ($ExportsRoot -and (Test-Path $ExportsRoot)) { $dialog.SelectedPath = $ExportsRoot }
+        if ($dialog.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {
+            $picked = $dialog.SelectedPath
+            if (-not $sourceCombo.Items.Contains($picked)) { $null = $sourceCombo.Items.Insert(0, $picked) }
+            $sourceCombo.SelectedItem = $picked
+        }
+    })
+
+    # Report source only applies to the report tabs (Excel/Visio/Word), not to
+    # Download Data (which collects fresh data). Hide the panel on that tab.
+    $actionTabs        = $window.FindName('ActionTabs')
+    $reportSourcePanel = $window.FindName('ReportSourcePanel')
+    $updateSourceVisibility = {
+        $header = "$($actionTabs.SelectedItem.Header)"
+        if ($header -eq 'Download Data') {
+            $reportSourcePanel.Visibility = [System.Windows.Visibility]::Collapsed
+        } else {
+            $reportSourcePanel.Visibility = [System.Windows.Visibility]::Visible
+        }
+    }
+    $actionTabs.Add_SelectionChanged($updateSourceVisibility)
+    & $updateSourceVisibility   # set correct state on open (Download Data is first)
+
+    $exportCsv   = $window.FindName('ExportCsv')
+    $exportJson  = $window.FindName('ExportJson')
+    $exportExcel = $window.FindName('ExportExcel')
+
+    # document-format checkboxes on the Generate Documents tab
+    $docExcel = $window.FindName('DocExcel')
+    $docVisio = $window.FindName('DocVisio')
+    $docSvg   = $window.FindName('DocSvg')
+    $docWord  = $window.FindName('DocWord')
+    $btnRun      = $window.FindName('BtnRun')
+
+    $window.FindName('BtnAll').Add_Click( { foreach ($c in $list.Children) { $c.IsChecked = $true } } )
+    $window.FindName('BtnNone').Add_Click({ foreach ($c in $list.Children) { $c.IsChecked = $false } })
+
+    # Run: build the request from the active tab, invoke the callback, keep the window open
+    $btnRun.Add_Click({
+        $header  = [string]$tabs.SelectedItem.Header
+        $chosen  = [string]$sourceCombo.SelectedItem
+        if ($chosen -like '(no exports*') { $chosen = $null }
+        $request = switch ($header) {
+            'Generate Documents' {
+                $formats = @()
+                if ($docExcel.IsChecked) { $formats += 'Excel' }
+                if ($docVisio.IsChecked) { $formats += 'Visio' }
+                if ($docSvg.IsChecked)   { $formats += 'Svg' }
+                if ($docWord.IsChecked)  { $formats += 'Word' }
+                [pscustomobject]@{ Action = 'ReportDocs'; Formats = $formats; SourceFolder = $chosen }
+            }
+            default {
+                $selectedCollectors = @(foreach ($c in $list.Children) { if ($c.IsChecked) { [string]$c.Tag } })
+                $selectedFormats = @()
+                if ($exportCsv.IsChecked)   { $selectedFormats += 'Csv' }
+                if ($exportJson.IsChecked)  { $selectedFormats += 'Json' }
+                if ($exportExcel.IsChecked) { $selectedFormats += 'Excel' }
+                [pscustomobject]@{ Action = 'Collect'; Collectors = $selectedCollectors; Formats = $selectedFormats }
+            }
+        }
+
+        $btnRun.IsEnabled = $false
+        $status.Text      = "Running: $header — see the console for progress..."
+        # Let WPF paint the disabled state before the (blocking) work starts
+        $window.Dispatcher.Invoke([action]{}, [Windows.Threading.DispatcherPriority]::Render)
+
+        try   { & $OnRun $request; $status.Text = "Finished: $header at $(Get-Date -Format 'HH:mm:ss')" }
+        catch { $status.Text = "Failed: $($_.Exception.Message)" ; Write-Host "ERROR: $($_.Exception.Message)" -ForegroundColor Red }
+        finally { $btnRun.IsEnabled = $true }
+    })
+
+    $null = $window.ShowDialog()
+}

@@ -1,0 +1,5 @@
+# Tillgängliga platshållare: {TenantName} {PrimaryDomain} {Environment} {GeneratedDate} {TotalUsers} {TotalGroups} {TotalLicenceSkus} {TotalAppRegistrations} {TotalEnterpriseApps} {TotalDomains}
+# Redigera texten fritt. Behåll {platshållare} där du vill att siffrorna ska visas.
+# Rader som börjar med # är kommentarer och ignoreras.
+
+Det här dokumentet beskriver Microsoft Entra ID-miljön för {TenantName} ({PrimaryDomain}). Miljön är av typen {Environment} och dokumenterades {GeneratedDate}. Övergripande innehåller den {TotalUsers} användarkonton, {TotalGroups} grupper, {TotalLicenceSkus} licenstyper, {TotalAppRegistrations} app-registreringar, {TotalEnterpriseApps} företagsapplikationer och {TotalDomains} verifierade domäner.

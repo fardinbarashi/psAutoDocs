@@ -1,0 +1,5 @@
+# Tillgängliga platshållare: {TotalLicenceSkus} {PurchasedSkus} {ViralSkus}
+# Redigera texten fritt. Behåll {platshållare} där du vill att siffrorna ska visas.
+# Rader som börjar med # är kommentarer och ignoreras.
+
+Miljön har totalt {TotalLicenceSkus} licenstyper - {PurchasedSkus} köpta prenumerationer och {ViralSkus} kostnadsfria eller virala SKU:er.

@@ -1,0 +1,5 @@
+# Tillgängliga platshållare: {TotalGroups} {SecurityGroups} {M365Groups} {DynamicGroups} {CloudGroups} {OnPremisesGroups}
+# Redigera texten fritt. Behåll {platshållare} där du vill att siffrorna ska visas.
+# Rader som börjar med # är kommentarer och ignoreras.
+
+Det finns totalt {TotalGroups} grupper: {SecurityGroups} säkerhetsgrupper och {M365Groups} Microsoft 365-grupper. {DynamicGroups} använder dynamiskt medlemskap. Efter källa är {CloudGroups} enbart moln och {OnPremisesGroups} synkade från lokal Active Directory.

@@ -1,0 +1,5 @@
+# Tillgängliga platshållare: {TotalAppRegistrations} {SingleTenantApps} {MultiTenantApps} {AppsWithoutOwner} {AppsExpiringSoon} {AppsWithRisk}
+# Redigera texten fritt. Behåll {platshållare} där du vill att siffrorna ska visas.
+# Rader som börjar med # är kommentarer och ignoreras.
+
+Det finns {TotalAppRegistrations} app-registreringar - {SingleTenantApps} enkel-tenant och {MultiTenantApps} multi-tenant. {AppsWithoutOwner} saknar ägare, {AppsExpiringSoon} har en autentiseringsuppgift som går ut inom 30 dagar, och {AppsWithRisk} flaggades av riskkontrollen.

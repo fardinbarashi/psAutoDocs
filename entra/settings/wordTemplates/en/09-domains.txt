@@ -1,0 +1,5 @@
+# Available placeholders: {TotalDomains} {DefaultDomain}
+# Edit this text freely. Keep the {placeholders} where you want the numbers to appear.
+# Lines starting with # are comments and are ignored.
+
+{TotalDomains} verified domains are registered in the tenant. The default domain is {DefaultDomain}.

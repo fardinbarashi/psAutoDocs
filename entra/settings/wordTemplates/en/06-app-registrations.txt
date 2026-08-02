@@ -1,0 +1,5 @@
+# Available placeholders: {TotalAppRegistrations} {SingleTenantApps} {MultiTenantApps} {AppsWithoutOwner} {AppsExpiringSoon} {AppsWithRisk}
+# Edit this text freely. Keep the {placeholders} where you want the numbers to appear.
+# Lines starting with # are comments and are ignored.
+
+There are {TotalAppRegistrations} app registrations - {SingleTenantApps} single-tenant and {MultiTenantApps} multi-tenant. {AppsWithoutOwner} have no owner assigned, {AppsExpiringSoon} have a credential expiring within 30 days, and {AppsWithRisk} were flagged by the risk check.
