@@ -304,9 +304,10 @@ current usage against the documented Microsoft Entra service limits
 ---
 
 ## Roadmap
+- Implent more Service limits & recommendations.
+- if add hybrid Entra connect helth
 - Implement **Visio** map export .
 - Implement the **Word** system-documentation.
-- Implent more Service limits & recommendations.
 - Automated documentation of **Windows Servers** — installed roles and
   configurations.
 
