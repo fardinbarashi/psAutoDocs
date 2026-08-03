@@ -188,7 +188,6 @@ users and licences broken down by office location.
 users holding more than one licence.
 ![Multi-licence users](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel7.jpg)
 
-
 #### 08 Groups overview:
 group counts by type and source (security, Microsoft 365, dynamic, cloud vs on-prem).
 ![Groups overview](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel8.jpg)
@@ -214,16 +213,104 @@ current usage against the documented Microsoft Entra service limits, colour-code
 ![Limits & recommendations](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel13.jpg)
 
 
-  
+---  
 ### SVG
- 
-![Link](https://github.com/fardinbarashi/psAutoDocs/tree/main/githubRepoContentDeleteIfYouWant/data-mock%20(Lab%20Contoso)/svg)
+
+#### Tenant overview - tree:
+the whole tenant expanded as a tree; every area with its items listed. (Very large in big tenants — best viewed in Firefox.)
+![Tenant overview - tree](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/EntraID%20-%20Overview%20tree.jpg)
+
+#### Tenant overview - hub:
+A one-page summary: the tenant in the centre with a node per area (users, groups, roles, apps, domains, and more).
+![Tenant overview - hub](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/EntraID%20-%20Hub.jpg)
+
+#### Users (types, domains, auth, titles):
+the user population by user type, domain, authentication methods and job titles.
+![Users, types, domains, auth, titles](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/Entra%20ID%20-%20Users%20(types%2C%20domains%2C%20auth%2C%20titles)%201.jpg)
+![](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/Entra%20ID%20-%20Users%20(types%2C%20domains%2C%20auth%2C%20titles)%202.jpg)
+
+#### Groups(all):
+every group with its owners, type, membership and settings.
+![Groups all](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/Group%20All.jpg)
+
+#### Group owners:
+owners and how many groups each person owns.
+![Group owners](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/GroupOwners.jpg)
+
+#### Groups - members by department (list):
+one card per group listing its members grouped by department.
+![Groups - members by department list](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/Group%20member%20by%20department.jpg)
+
+#### Groups x departments - <Letter>:
+one file per starting letter: a matrix of those groups against departments.
+![Groups x departments - Letter](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/GroupDepartemnsLetter.jpg)
+
+#### Organization chart:
+users arranged by manager relationships.
+![Organization chart](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/Org%20Department%20office%20location%20chart.jpg)
+
+#### Licenses (SKUs):
+subscribed licence SKUs and how many are consumed.
+![Licenses SKUs](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/Lic1.jpg)
+![](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/Lic2.jpg)
+
+#### Conditional Access policies:
+one card per policy, who it targets, what it grants or blocks, and its state.
+![Conditional Access policies](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/CA1.jpg)
+![](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/CA2.jpg)
+![](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/CA3.jpg)
+![](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/CA4.jpg)
+
+#### App registrations:
+one card per app registration: IDs, owners, credential expiry and risk findings.
+![App registrations](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/Appreg%201.jpg)
+![](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/Appreg%202.jpg)
+![](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/Appreg%203.jpg)
+
+#### Enterprise apps:
+Enterprise application (service principal): one card per app, type, single sign-on and permissions.
+![Enterprise application](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/EnterpriseApps%201.jpg)
+![](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/EnterpriseApps%202.jpg)
+![](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/EnterpriseApps%203.jpg)
+
+#### RBAC roles by category:
+directory role assignments grouped into categories.
+![RBAC roles category](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/RBAC%20roles%20by%20category%201.jpg)
+![](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/RBAC%20roles%20by%20category%202.jpg)
+
+
+#### RBAC matrix (roles x people):
+category matrices with people as rows and roles as columns.
+![RBAC roles matrix](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/RBAC%20matrix%20roles%20x%20people%201.jpg)
+![](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/RBAC%20matrix%20roles%20x%20people%202.jpg)
+![](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/RBAC%20matrix%20roles%20x%20people%202.jpg)
+
+#### Domains:
+verified custom domains grouped by type.
+![Domains](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/Domain%201.jpg)
+![](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/svg/Domain%202.jpg)
+
+
+#### Password reset (SSPR):
+the tenant's self-service password-reset configuration.
+![Password reset SSPR](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/SSPR.jpg)
+
+#### Service limits & recommendations:
+current usage against the documented Microsoft Entra service limits
+![Service limits recommendations](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/Servicelimit.jpg)
+
+
+---
+###
+Sourcefiles : 
+![Sourcefiles](https://github.com/fardinbarashi/psAutoDocs/tree/main/githubRepoContentDeleteIfYouWant/data-mock%20(Lab%20Contoso)/svg)
 
 ---
 
 ## Roadmap
 - Implement **Visio** map export .
 - Implement the **Word** system-documentation.
+- Implent more Service limits & recommendations.
 - Automated documentation of **Windows Servers** — installed roles and
   configurations.
 
