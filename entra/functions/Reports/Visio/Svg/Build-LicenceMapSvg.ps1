@@ -40,8 +40,8 @@ function Build-LicenceMapSvg {
     $pageH = [math]::Max(8.5, $vSpan)
 
     $shapes = @(); $links = @()
-    $dsY   = $pageH - $marginTop - $dsH / 2
-    $topY  = $dsY - $dsH / 2 - $gapY - $tenantH / 2
+    $topY   = $pageH - $marginTop - $tenantH / 2
+    $dsY  = $topY - $tenantH / 2 - $gapY - $dsH / 2
     $today = Get-Date -Format 'yyyy-MM-dd'
 
     # tenant: one shape, per-line bold via Lines (SVG handles it)
@@ -63,7 +63,7 @@ function Build-LicenceMapSvg {
                   X=$pageW/2; Y=$topY; W=5.2; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=11; Icon=$tenantIcon }
 
     # colour legend: one dashed shape, bold keyword prefix per line
-    $legendY = $topY - $tenantH / 2 - $gapY - $legendH / 2
+    $legendY = $dsY - $dsH / 2 - $gapY - $legendH / 2
     $legendLines = @(
         @{ BoldPrefix = 'Numbers: '; Text = 'Used / Total  (percent used)'; Align = 'start' }
         @{ BoldPrefix = 'Red: ';     Text = '10% or fewer licences free';   Align = 'start' }
@@ -108,7 +108,7 @@ function Build-LicenceMapSvg {
     }
 
     $stamp = Get-Date -Format 'yyyy-MM-dd_HH.mm.ss'
-    $svgDir = Join-Path $SourceFolder 'svg'
+    $svgDir = Join-Path $SourceFolder 'Report\svg'
     if (-not (Test-Path $svgDir)) { New-Item -Path $svgDir -ItemType Directory -Force | Out-Null }
     $svg = Join-Path $svgDir "Entra ID - Licenses (SKUs) $stamp.svg"
     Export-MapAsSvg -Path $svg -Shape $shapes -Connector $links -PageWidth $pageW -PageHeight $pageH | Out-Null

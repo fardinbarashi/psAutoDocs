@@ -118,7 +118,7 @@ function Build-OverviewMapSvg {
     }
 
     $stamp = Get-Date -Format 'yyyy-MM-dd_HH.mm.ss'
-    $svgDir = Join-Path $SourceFolder 'svg'
+    $svgDir = Join-Path $SourceFolder 'Report\svg'
     if (-not (Test-Path $svgDir)) { New-Item -Path $svgDir -ItemType Directory -Force | Out-Null }
     $mapName = if ($Style -eq 'hub') { 'EntraID - Hub' } else { "Entra ID - Tenant overview - $Style" }
     $svg = Join-Path $svgDir "$mapName $stamp.svg"
@@ -360,7 +360,7 @@ function Build-OverviewTree {
     }
 
     $stamp = Get-Date -Format 'yyyy-MM-dd_HH.mm.ss'
-    $svgDir = Join-Path $SourceFolder 'svg'
+    $svgDir = Join-Path $SourceFolder 'Report\svg'
     if (-not (Test-Path $svgDir)) { New-Item -Path $svgDir -ItemType Directory -Force | Out-Null }
     $svg = Join-Path $svgDir "EntraID - Overview tree $stamp.svg"
     Export-MapAsSvg -Path $svg -Shape $shapes -Connector $links -PageWidth $pageW -PageHeight $pageH | Out-Null

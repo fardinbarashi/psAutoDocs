@@ -224,8 +224,8 @@ function Build-ConditionalAccessMapSvg {
     $pageH = [math]::Max(8.5, $vSpan)
 
     $shapes = @()
-    $dsY   = $pageH - $marginTop - $dsH / 2
-    $topY  = $dsY - $dsH / 2 - $gapY - $tenantH / 2
+    $topY   = $pageH - $marginTop - $tenantH / 2
+    $dsY  = $topY - $tenantH / 2 - $gapY - $dsH / 2
     $today = Get-Date -Format 'yyyy-MM-dd'
 
     $enabledN  = @($policies | Where-Object State -eq 'enabled').Count
@@ -247,7 +247,7 @@ function Build-ConditionalAccessMapSvg {
     $shapes += @{ Id='datasource'; Kind='Rectangle'; Lines=$dsBlock.Lines; LinesTop=$true; TopInset=0.10; Columns=$dsBlock.Columns; GridFrom=$dsBlock.GridFrom
                   X=$pageW/2; Y=$dsY; W=$dsW; H=$dsH; Fill='#F7F7F7'; Line='#888888'; FontSize=8 }
 
-    $legendY = $topY - $tenantH / 2 - $gapY - $legendH / 2
+    $legendY = $dsY - $dsH / 2 - $gapY - $legendH / 2
     $legendLines = @(
         @{ Text = 'How to read this map'; Bold = $true; Align = 'start' }
         @{ BoldPrefix = 'Green = '; Text = 'enabled   Amber = report-only   Grey = disabled'; Align = 'start' }
@@ -268,7 +268,7 @@ function Build-ConditionalAccessMapSvg {
     }
 
     $stamp = Get-Date -Format 'yyyy-MM-dd_HH.mm.ss'
-    $svgDir = Join-Path $SourceFolder 'svg'
+    $svgDir = Join-Path $SourceFolder 'Report\svg'
     if (-not (Test-Path $svgDir)) { New-Item -Path $svgDir -ItemType Directory -Force | Out-Null }
     $svg = Join-Path $svgDir "Entra ID - Conditional Access policies $stamp.svg"
     Export-MapAsSvg -Path $svg -Shape $shapes -PageWidth $pageW -PageHeight $pageH | Out-Null

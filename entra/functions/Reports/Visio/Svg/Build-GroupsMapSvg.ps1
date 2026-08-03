@@ -69,8 +69,8 @@ function Build-GroupsMapSvg {
     $pageH = [math]::Max(8.5, $vSpan)
 
     $shapes = @(); $links = @()
-    $dsY   = $pageH - $marginTop - $dsH / 2
-    $topY  = $dsY - $dsH / 2 - $gapY - $tenantH / 2
+    $topY   = $pageH - $marginTop - $tenantH / 2
+    $dsY  = $topY - $tenantH / 2 - $gapY - $dsH / 2
     $today = Get-Date -Format 'yyyy-MM-dd'
 
     # tenant (SVG: per-line bold via Lines)
@@ -90,7 +90,7 @@ function Build-GroupsMapSvg {
                   X=$pageW/2; Y=$topY; W=5.2; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=11; Icon=$tenantIcon }
 
     # legend
-    $legendY = $topY - $tenantH / 2 - $gapY - $legendH / 2
+    $legendY = $dsY - $dsH / 2 - $gapY - $legendH / 2
     $legendLines = @(
         @{ BoldPrefix = 'Blue: ';     Text = 'cloud-native group';              Align = 'start' }
         @{ BoldPrefix = 'Grey: ';     Text = 'synced from on-prem AD';          Align = 'start' }
@@ -143,7 +143,7 @@ function Build-GroupsMapSvg {
     }
 
     $stamp = Get-Date -Format 'yyyy-MM-dd_HH.mm.ss'
-    $svgDir = Join-Path $SourceFolder 'svg'
+    $svgDir = Join-Path $SourceFolder 'Report\svg'
     if (-not (Test-Path $svgDir)) { New-Item -Path $svgDir -ItemType Directory -Force | Out-Null }
     $svg = Join-Path $svgDir "Entra ID - Groups (all) $stamp.svg"
     Export-MapAsSvg -Path $svg -Shape $shapes -Connector $links -PageWidth $pageW -PageHeight $pageH | Out-Null

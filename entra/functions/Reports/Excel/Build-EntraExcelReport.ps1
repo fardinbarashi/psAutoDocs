@@ -49,7 +49,7 @@ function Build-EntraExcelReport {
 
     # Timestamp includes time so repeated runs on the same day don't overwrite.
     # The workbook goes in its own "excelkpi" sub-folder of the export.
-    $kpiDir = Join-Path $SourceFolder 'excelkpi'
+    $kpiDir = Join-Path $SourceFolder 'Report\excelkpi'
     if (-not (Test-Path $kpiDir)) { New-Item -Path $kpiDir -ItemType Directory -Force | Out-Null }
     $reportPath = Join-Path $kpiDir ("KPI " + (Get-Date -Format 'yyyy-MM-dd_HH.mm.ss') + ".xlsx")
     if (Test-Path $reportPath) { Remove-Item $reportPath -Force }

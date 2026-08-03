@@ -13,7 +13,7 @@ function New-AutodocPaths {
 
     $filesRoot  = Join-Path $Root      'files'
     $exportRoot = Join-Path $filesRoot "exports\$runStamp"
-    $summary    = Join-Path $exportRoot 'TenantSummary'
+    $summary    = Join-Path $exportRoot 'rawDataTenantSummary'
 
     $paths = @{
         Root     = $Root
@@ -25,9 +25,9 @@ function New-AutodocPaths {
         Cache = Join-Path $filesRoot 'cache'
 
         Export  = $exportRoot
-        Csv     = Join-Path $exportRoot 'csv'
-        Json    = Join-Path $exportRoot 'json'
-        Excel   = Join-Path $exportRoot 'excel'
+        Csv     = Join-Path $exportRoot 'rawDataCsv'
+        Json    = Join-Path $exportRoot 'rawDataJson'
+        Excel   = Join-Path $exportRoot 'rawDataExcel'
         Summary = $summary
 
         # Reference / settings files

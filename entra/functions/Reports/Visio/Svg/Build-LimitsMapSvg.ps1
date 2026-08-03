@@ -38,10 +38,10 @@ function Build-LimitsMapSvg {
 
     $n = $rows.Count
     # vertical plan from the top
-    $mTop = 0.4; $tenantH = 1.4; $gap1 = 0.45; $titleH = 0.55; $gap2 = 0.2
+    $mTop = 0.4; $tenantH = 1.4; $gapNote = 0.2; $noteH = 0.68; $gap1 = 0.45; $titleH = 0.55; $gap2 = 0.2
     $rowsSpan = $n * $rowStep
-    $gap3 = 0.35; $legendH = 0.35; $gap4 = 0.15; $noteH = 0.55; $mBottom = 0.4
-    $pageH = $mTop + $tenantH + $gap1 + $titleH + $gap2 + $rowsSpan + $gap3 + $legendH + $gap4 + $noteH + $mBottom
+    $gap3 = 0.35; $legendH = 0.35; $mBottom = 0.4
+    $pageH = $mTop + $tenantH + $gapNote + $noteH + $gap1 + $titleH + $gap2 + $rowsSpan + $gap3 + $legendH + $mBottom
 
     function TopY([double]$offsetFromTop) { return $pageH - $offsetFromTop }
 
@@ -63,7 +63,7 @@ function Build-LimitsMapSvg {
                   Fill = '#0F6CBD'; Line = '#0B4C87'; FontSize = 11; Icon = $limitsIcon }
 
     # ---- chart title ----
-    $chartTop = $mTop + $tenantH + $gap1
+    $chartTop = $mTop + $tenantH + $gapNote + $noteH + $gap1
     $titleCY  = TopY ($chartTop + $titleH / 2)
     $shapes += @{ Id = 'charttitle'; Kind = 'Rectangle'; Fill = 'none'; Line = 'none';
                   Lines = @(
@@ -129,17 +129,17 @@ function Build-LimitsMapSvg {
                   Lines = @(@{ Text = $legendText; Bold = $false; Align = 'start' });
                   X = $labelX0 + ($pageW - 2 * $marginX) / 2; Y = $legendCY; W = $pageW - 2 * $marginX; H = $legendH; FontSize = 8.5 }
 
-    # ---- source note ----
-    $noteCY = TopY ($pageH - $mBottom - $noteH / 2)
+    # ---- source note (top, under the header) ----
+    $noteCY = TopY ($mTop + $tenantH + $gapNote + $noteH / 2)
     $shapes += @{ Id = 'note'; Kind = 'Rectangle'; Fill = '#F7F7F7'; Line = '#CCCCCC';
                   Lines = @(
                       @{ Text = 'Limits: Microsoft Entra service limits and restrictions (Microsoft Learn), via files\cache\EntraServiceLimits.json.'; Bold = $false; Align = 'start' }
                       @{ Text = 'Current values counted from the exported JSON for this tenant.'; Bold = $false; Align = 'start' }
                   );
-                  X = $labelX0 + ($pageW - 2 * $marginX) / 2; Y = $noteCY; W = $pageW - 2 * $marginX; H = $noteH; FontSize = 8 }
+                  X = $labelX0 + ($pageW - 2 * $marginX) / 2; Y = $noteCY; W = $pageW - 2 * $marginX; H = $noteH; FontSize = 10 }
 
     $stamp = Get-Date -Format 'yyyy-MM-dd_HH.mm.ss'
-    $svgDir = Join-Path $SourceFolder 'svg'
+    $svgDir = Join-Path $SourceFolder 'Report\svg'
     if (-not (Test-Path $svgDir)) { New-Item -Path $svgDir -ItemType Directory -Force | Out-Null }
     $svg = Join-Path $svgDir "Entra ID - Service limits & recommendations $stamp.svg"
     Export-MapAsSvg -Path $svg -Shape $shapes -Connector @() -PageWidth $pageW -PageHeight $pageH | Out-Null

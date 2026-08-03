@@ -60,8 +60,8 @@ function Build-OrgMapSvg {
     $pageH = [math]::Max(8.5, $vSpan)
 
     $shapes = @(); $links = @()
-    $dsY   = $pageH - $marginTop - $dsH / 2
-    $topY  = $dsY - $dsH / 2 - $gapY - $tenantH / 2
+    $topY   = $pageH - $marginTop - $tenantH / 2
+    $dsY  = $topY - $tenantH / 2 - $gapY - $dsH / 2
     $today = Get-Date -Format 'yyyy-MM-dd'
 
     # tenant: one shape with per-line bold
@@ -81,7 +81,7 @@ function Build-OrgMapSvg {
                   X=$pageW/2; Y=$topY; W=5.2; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=11; Icon=$wpIcon }
 
     # legend: one dashed shape with bold heading + bold-prefix rows
-    $orgLegendY = $topY - $tenantH / 2 - $gapY - $orgLegendH / 2
+    $orgLegendY = $dsY - $dsH / 2 - $gapY - $orgLegendH / 2
     $orgLegendLines = @(
         @{ Text = 'How to read this map'; Bold = $true; Align = 'start' }
         @{ Text = 'Users grouped by their CompanyName and Department fields'; Bold = $false; Align = 'start' }
@@ -106,7 +106,7 @@ function Build-OrgMapSvg {
     }
 
     $stamp = Get-Date -Format 'yyyy-MM-dd_HH.mm.ss'
-    $svgDir = Join-Path $SourceFolder 'svg'
+    $svgDir = Join-Path $SourceFolder 'Report\svg'
     if (-not (Test-Path $svgDir)) { New-Item -Path $svgDir -ItemType Directory -Force | Out-Null }
     $svg = Join-Path $svgDir "Entra ID - Organization Department Officelocation chart $stamp.svg"
     Export-MapAsSvg -Path $svg -Shape $shapes -Connector $links -PageWidth $pageW -PageHeight $pageH | Out-Null

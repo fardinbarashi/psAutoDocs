@@ -220,7 +220,7 @@ function Add-KpiDataSource {
     )
     try {
         if (-not $SourceFolder) { return }
-        $jsonDir = Join-Path $SourceFolder 'json'
+        $jsonDir = Join-Path $SourceFolder 'rawDataJson'
         $paths = foreach ($b in $BaseName) {
             $f = Get-ChildItem -Path $jsonDir -Filter "$b*.json" -ErrorAction SilentlyContinue |
                  Sort-Object LastWriteTime -Descending | Select-Object -First 1

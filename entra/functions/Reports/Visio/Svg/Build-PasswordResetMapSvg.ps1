@@ -31,8 +31,8 @@ function Build-PasswordResetMapSvg {
     $pageH = [math]::Max(8.5, $marginTop + $dsH + $gapY + $tenantH + $gapY + $legendH + $gapY + $cardH + $marginBottom)
 
     $shapes = @()
-    $dsY   = $pageH - $marginTop - $dsH / 2
-    $topY  = $dsY - $dsH / 2 - $gapY - $tenantH / 2
+    $topY   = $pageH - $marginTop - $tenantH / 2
+    $dsY  = $topY - $tenantH / 2 - $gapY - $dsH / 2
     $today = Get-Date -Format 'yyyy-MM-dd'
 
     $shapes += @{ Id='datasource'; Kind='Rectangle'; Lines=$dsBlock.Lines; LinesTop=$true; TopInset=0.10
@@ -50,7 +50,7 @@ function Build-PasswordResetMapSvg {
     $shapes += @{ Id='tenant'; Kind='Rectangle'; Lines=$tenantLines
                   X=$pageW/2; Y=$topY; W=5.6; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=11; Icon=$tenantIcon }
 
-    $legendY = $topY - $tenantH / 2 - $gapY - $legendH / 2
+    $legendY = $dsY - $dsH / 2 - $gapY - $legendH / 2
     $legendLines = @(
         @{ Text = 'How to read this map'; Bold = $true; Align = 'start' }
         @{ BoldPrefix = 'Card = '; Text = 'the tenant-wide SSPR configuration'; Align = 'start' }
@@ -76,7 +76,7 @@ function Build-PasswordResetMapSvg {
                   X=$pageW/2; Y=$cardY; W=7.0; H=$cardH; Fill='#EEF2F7'; Line='#888888'; FontSize=10 }
 
     $stamp = Get-Date -Format 'yyyy-MM-dd_HH.mm.ss'
-    $svgDir = Join-Path $SourceFolder 'svg'
+    $svgDir = Join-Path $SourceFolder 'Report\svg'
     if (-not (Test-Path $svgDir)) { New-Item -Path $svgDir -ItemType Directory -Force | Out-Null }
     $svg = Join-Path $svgDir "Entra ID - Password reset (SSPR) $stamp.svg"
     Export-MapAsSvg -Path $svg -Shape $shapes -PageWidth $pageW -PageHeight $pageH | Out-Null

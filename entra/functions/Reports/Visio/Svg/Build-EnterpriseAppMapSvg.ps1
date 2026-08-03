@@ -153,8 +153,8 @@ function Build-EnterpriseAppMapSvg {
     $pageH = [math]::Max(8.5, $marginTop + $dsH + $gapY + $tenantH + $gapY + $legendH + $gapY + $colBlockH + $marginBottom)
 
     $shapes = @()
-    $dsY   = $pageH - $marginTop - $dsH / 2
-    $topY  = $dsY - $dsH / 2 - $gapY - $tenantH / 2
+    $topY   = $pageH - $marginTop - $tenantH / 2
+    $dsY  = $topY - $tenantH / 2 - $gapY - $dsH / 2
     $today = Get-Date -Format 'yyyy-MM-dd'
 
     $shapes += @{ Id='datasource'; Kind='Rectangle'; Lines=$dsBlock.Lines; LinesTop=$true; TopInset=0.10; Columns=$dsBlock.Columns; GridFrom=$dsBlock.GridFrom
@@ -172,7 +172,7 @@ function Build-EnterpriseAppMapSvg {
     $shapes += @{ Id='tenant'; Kind='Rectangle'; Lines=$tenantLines
                   X=$pageW/2; Y=$topY; W=5.8; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=11; Icon=$tenantIcon }
 
-    $legendY = $topY - $tenantH / 2 - $gapY - $legendH / 2
+    $legendY = $dsY - $dsH / 2 - $gapY - $legendH / 2
     $legendLines = @(
         @{ BoldPrefix = 'Green: ';    Text = 'SSO configured';     Align = 'start' }
         @{ BoldPrefix = 'Grey: ';     Text = 'SSO not configured'; Align = 'start' }
@@ -195,7 +195,7 @@ function Build-EnterpriseAppMapSvg {
     }
 
     $stamp = Get-Date -Format 'yyyy-MM-dd_HH.mm.ss'
-    $svgDir = Join-Path $SourceFolder 'svg'
+    $svgDir = Join-Path $SourceFolder 'Report\svg'
     if (-not (Test-Path $svgDir)) { New-Item -Path $svgDir -ItemType Directory -Force | Out-Null }
     $svg = Join-Path $svgDir "Entra ID - Enterprise apps $stamp.svg"
     Export-MapAsSvg -Path $svg -Shape $shapes -PageWidth $pageW -PageHeight $pageH | Out-Null

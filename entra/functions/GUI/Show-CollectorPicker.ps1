@@ -107,10 +107,33 @@ function Show-CollectorPicker {
     $docVisio = $window.FindName('DocVisio')
     $docSvg   = $window.FindName('DocSvg')
     $docWord  = $window.FindName('DocWord')
+
+    # Populate the Word language list from the folders under wordTemplates, so
+    # adding a language folder (en, sv, es, ...) makes it selectable here.
+    $wordLang = $window.FindName('WordLanguage')
+    $tmplRoot = Join-Path (Split-Path (Split-Path $PSScriptRoot)) 'files\cache\wordTemplates'
+    if (Test-Path $tmplRoot) {
+        foreach ($d in (Get-ChildItem -Path $tmplRoot -Directory | Sort-Object Name)) { $null = $wordLang.Items.Add($d.Name) }
+    }
+    if ($wordLang.Items.Contains('en')) { $wordLang.SelectedItem = 'en' }
+    elseif ($wordLang.Items.Count -gt 0) { $wordLang.SelectedIndex = 0 }
+
     $btnRun      = $window.FindName('BtnRun')
 
     $window.FindName('BtnAll').Add_Click( { foreach ($c in $list.Children) { $c.IsChecked = $true } } )
     $window.FindName('BtnNone').Add_Click({ foreach ($c in $list.Children) { $c.IsChecked = $false } })
+
+    # Disconnect from Microsoft Graph so the next collection prompts a fresh
+    # sign-in - lets you run against a different tenant.
+    $window.FindName('BtnDisconnect').Add_Click({
+        try {
+            Disconnect-MgGraph -ErrorAction Stop | Out-Null
+            $status.Text = 'Signed out of Microsoft Graph. The next Run will prompt sign-in - pick the tenant there.'
+        }
+        catch {
+            $status.Text = 'Not currently signed in to Microsoft Graph.'
+        }
+    })
 
     # Run: build the request from the active tab, invoke the callback, keep the window open
     $btnRun.Add_Click({

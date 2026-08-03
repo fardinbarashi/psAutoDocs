@@ -39,7 +39,7 @@ function Invoke-AutodocReport {
         switch ($Kind) {
             'Excel' {
                 Build-EntraExcelReport -ExportsRoot $exportsRoot @extra | Out-Null
-                if ($src) { $outFolder = Join-Path $src 'excelkpi' }
+                if ($src) { $outFolder = Join-Path $src 'Report\excelkpi' }
             }
             'Visio' {
                 # Visio files only (the two .vsdx). SVG has its own tab now.
@@ -50,8 +50,8 @@ function Invoke-AutodocReport {
                     Build-LicenceMapVisio -SourceFolder $src | Out-Null
                     Build-OrgMapVisio     -SourceFolder $src | Out-Null
                     Write-Host ""
-                    Write-Host "Done. Visio files: $(Join-Path $src 'visio')" -ForegroundColor Green
-                    $outFolder = Join-Path $src 'visio'
+                    Write-Host "Done. Visio files: $(Join-Path $src 'Report\visio')" -ForegroundColor Green
+                    $outFolder = Join-Path $src 'Report\visio'
                 }
             }
             'Svg' {
@@ -77,10 +77,10 @@ function Invoke-AutodocReport {
                     Build-LimitsMapSvg   -SourceFolder $src | Out-Null   # service limits & recommendations
                     Build-OverviewMapSvg -SourceFolder $src -Style hub  | Out-Null   # one-page overview (hub)
                     Build-OverviewMapSvg -SourceFolder $src -Style tree | Out-Null   # full expanded tree
-                    Write-SvgReadme -SvgFolder (Join-Path $src 'svg')                 # README describing the SVG files
+                    Write-SvgReadme -SvgFolder (Join-Path $src 'Report\svg')                 # README describing the SVG files
                     # PDF copies of every map, into a pdf subfolder.
-                    $svgFolder = Join-Path $src 'svg'
-                    $pdfFolder = Join-Path $src 'pdf'
+                    $svgFolder = Join-Path $src 'Report\svg'
+                    $pdfFolder = Join-Path $src 'Report\pdf'
                     $pdfMade = 0
                     foreach ($svgFile in Get-ChildItem -Path $svgFolder -Filter '*.svg' -ErrorAction SilentlyContinue) {
                         $pdfPath = Join-Path $pdfFolder ($svgFile.BaseName + '.pdf')
@@ -88,11 +88,11 @@ function Invoke-AutodocReport {
                     }
                     if ($pdfMade -gt 0) { Write-Host "  PDF copies: $pdfMade maps -> $pdfFolder" -ForegroundColor DarkGreen }
                     Write-Host ""
-                    Write-Host "Done. SVG files: $(Join-Path $src 'svg')" -ForegroundColor Green
-                    $outFolder = Join-Path $src 'svg'
+                    Write-Host "Done. SVG files: $(Join-Path $src 'Report\svg')" -ForegroundColor Green
+                    $outFolder = Join-Path $src 'Report\svg'
                 }
             }
-            'Word'  { Build-EntraWordReport  -ExportsRoot $exportsRoot @extra; if ($src) { $outFolder = Join-Path $src 'word' } }
+            'Word'  { Build-EntraWordReport  -ExportsRoot $exportsRoot @extra; if ($src) { $outFolder = Join-Path $src 'Report\word' } }
         }
 
         # open the folder holding the freshly built files

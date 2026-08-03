@@ -53,7 +53,7 @@ function Build-RbacMapSvg {
 
     # shared "Data source" block (JSON path + field glossary) shown at the very top
     $dsW = [math]::Max(6.0, $pageW - 1)
-    $dsBlock = Get-MapDataSourceBlock -SourceFolder $SourceFolder -BaseName 'RBAC' -WidthIn $dsW -FontSize 8 -GridFields -GridMaxColumns 1
+    $dsBlock = Get-MapDataSourceBlock -SourceFolder $SourceFolder -BaseName 'RBAC' -WidthIn $dsW -FontSize 8 -GridFields -GridMaxColumns 3
     $dsH = $dsBlock.Height
 
     $cleanName = { param($p) $s = "$p"; if ($s -match '^(.*?)\s*<') { $matches[1].Trim() } else { $s.Trim() } }
@@ -119,9 +119,9 @@ function Build-RbacMapSvg {
 
     $shapes = @()
     $today = Get-Date -Format 'yyyy-MM-dd'
-    $dsY   = $pageH - $marginTop - $dsH / 2
-    $topY  = $dsY - $dsH / 2 - $gapY - $tenantH / 2
-    $shapes += @{ Id='datasource'; Kind='Rectangle'; Lines=$dsBlock.Lines; LinesTop=$true; TopInset=0.10
+    $topY   = $pageH - $marginTop - $tenantH / 2
+    $dsY  = $topY - $tenantH / 2 - $gapY - $dsH / 2
+    $shapes += @{ Id='datasource'; Kind='Rectangle'; Lines=$dsBlock.Lines; LinesTop=$true; TopInset=0.10; Columns=$dsBlock.Columns; GridFrom=$dsBlock.GridFrom
                   X=$pageW/2; Y=$dsY; W=$dsW; H=$dsH; Fill='#F7F7F7'; Line='#888888'; FontSize=8 }
 
     $tenantLines = if ($tenant) {
@@ -136,7 +136,7 @@ function Build-RbacMapSvg {
     $shapes += @{ Id='tenant'; Kind='Rectangle'; Lines=$tenantLines
                   X=$pageW/2; Y=$topY; W=6.6; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=14; Icon=$tenantIcon }
 
-    $legendY = $topY - $tenantH / 2 - $gapY - $legendH / 2
+    $legendY = $dsY - $dsH / 2 - $gapY - $legendH / 2
     $legendLines = @(
         @{ Text = 'Legend'; Bold = $true; Align = 'start' }
         @{ BoldPrefix = "$([char]0x25CF)  "; Text = 'Active Role'; Align = 'start' }
@@ -178,7 +178,7 @@ function Build-RbacMapSvg {
     }
 
     $stamp = Get-Date -Format 'yyyy-MM-dd_HH.mm.ss'
-    $svgDir = Join-Path $SourceFolder 'svg'
+    $svgDir = Join-Path $SourceFolder 'Report\svg'
     if (-not (Test-Path $svgDir)) { New-Item -Path $svgDir -ItemType Directory -Force | Out-Null }
     $svg = Join-Path $svgDir "Entra ID - RBAC roles by category $stamp.svg"
     Export-MapAsSvg -Path $svg -Shape $shapes -PageWidth $pageW -PageHeight $pageH | Out-Null

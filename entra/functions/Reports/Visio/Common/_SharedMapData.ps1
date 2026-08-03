@@ -884,7 +884,7 @@ function Get-MapDataSourceBlock {
     )
 
     # resolve the actual JSON file the map reads (newest match), else show pattern
-    $jsonDir = Join-Path $SourceFolder 'json'
+    $jsonDir = Join-Path $SourceFolder 'rawDataJson'
     $path = Join-Path $jsonDir "$BaseName*.json"
     $fields = @()
     try {

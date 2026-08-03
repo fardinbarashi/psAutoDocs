@@ -43,7 +43,7 @@ function Build-GroupDeptMatrixSvg {
     # share a similar hue (avoids a rainbow gradient of look-alike colours)
     $deptPalette = @('#EF9A9A', '#90CAF9', '#A5D6A7', '#FFCC80', '#CE93D8', '#80DEEA', '#FFF59D', '#B39DDB', '#C5E1A5', '#F48FB1', '#80CBC4', '#FFAB91', '#9FA8DA', '#E6EE9C', '#BCAAA4', '#81D4FA', '#FFE082', '#B0BEC5', '#D1C4E9', '#CFD8DC')
 
-    $svgDir = Join-Path $SourceFolder 'svg'
+    $svgDir = Join-Path $SourceFolder 'Report\svg'
     if (-not (Test-Path $svgDir)) { New-Item -Path $svgDir -ItemType Directory -Force | Out-Null }
     $stamp = Get-Date -Format 'yyyy-MM-dd_HH.mm.ss'
     $today = Get-Date -Format 'yyyy-MM-dd'
@@ -69,8 +69,8 @@ function Build-GroupDeptMatrixSvg {
         $pageH = [math]::Max(8.5, $marginTop + $dsH + $gapY + $tenantH + $gapY + $matH + $marginBottom)
 
         $shapes = [System.Collections.Generic.List[object]]::new()
-        $dsY  = $pageH - $marginTop - $dsH / 2
-        $topY = $dsY - $dsH / 2 - $gapY - $tenantH / 2
+        $topY  = $pageH - $marginTop - $tenantH / 2
+        $dsY = $topY - $tenantH / 2 - $gapY - $dsH / 2
 
         [void]$shapes.Add(@{ Id='datasource'; Kind='Rectangle'; Lines=$dsBlock.Lines; LinesTop=$true; TopInset=0.10
                              X=$pageW/2; Y=$dsY; W=$dsW; H=$dsH; Fill='#F7F7F7'; Line='#888888'; FontSize=9 })
@@ -88,7 +88,7 @@ function Build-GroupDeptMatrixSvg {
                              X=$pageW/2; Y=$topY; W=6.0; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=12; Icon=$tenantIcon })
 
         $gridLeft = ($pageW - $gridW) / 2
-        $titleCy  = ($topY - $tenantH / 2 - $gapY) - $titleH / 2
+        $titleCy  = ($dsY - $dsH / 2 - $gapY) - $titleH / 2
         $titleText = "Groups starting with `"$letter`"   —   $($grps.Count) groups, $($depts.Count) departments"
         # widen the title band when the grid is narrow so the title never spills
         $titleBandW = [math]::Min($pageW - 2 * $marginSide, [math]::Max($gridW, (Measure-MapTextWidth $titleText $fsTitle) + 0.5))
@@ -96,7 +96,7 @@ function Build-GroupDeptMatrixSvg {
                              Lines=@(@{ Text = $titleText; Bold = $true; Align = 'start' })
                              LinesTop=$true; TopInset=0.12
                              X=$pageW/2; Y=$titleCy; W=$titleBandW; H=$titleH; Fill='#E6EAF0'; Line='#B8BFC7'; FontSize=$fsTitle })
-        $headTop = $topY - $tenantH / 2 - $gapY - $titleH
+        $headTop = $dsY - $dsH / 2 - $gapY - $titleH
 
         for ($c = 0; $c -lt $depts.Count; $c++) {
             $colCx = $gridLeft + $rowLabelW + $c * $colW + $colW / 2

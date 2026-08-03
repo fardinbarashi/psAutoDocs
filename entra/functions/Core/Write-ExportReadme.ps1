@@ -11,7 +11,7 @@ function Write-ExportReadme {
     )
     if (-not (Test-Path $ExportFolder)) { return }
 
-    $jsonDir  = Join-Path $ExportFolder 'json'
+    $jsonDir  = Join-Path $ExportFolder 'rawDataJson'
     $glossary = Get-MapFieldGlossary
 
     # one-line purpose per JSON area (base name without the trailing date)
@@ -33,15 +33,15 @@ function Write-ExportReadme {
 
     # short description of each output sub-folder
     $folders = @(
-        @{ N = 'json';         D = 'Raw data pulled from Microsoft Graph, one file per area (each file is documented below).' }
-        @{ N = 'csv';          D = 'The same data as CSV - one file per area, opens directly in Excel or a text editor.' }
-        @{ N = 'excel';        D = 'Per-area Excel workbooks (one sheet of raw data each).' }
-        @{ N = 'excelkpi';     D = 'The KPI workbook "KPI <stamp>.xlsx": dashboard, charts and one analysed sheet per area.' }
-        @{ N = 'svg';          D = 'Vector maps of the tenant (open in a web browser). That folder has its own README.' }
-        @{ N = 'visio';        D = 'The same maps as editable Visio drawings (.vsdx).' }
-        @{ N = 'word';         D = 'The Word system-documentation report (.docx).' }
-        @{ N = 'pdf';          D = 'PDF copies of every SVG map, gathered in one place for sharing or printing.' }
-        @{ N = 'tenantsummary'; D = 'A short, high-level summary of the tenant.' }
+        @{ N = 'rawDataJson';          D = 'Raw data pulled from Microsoft Graph, one file per area (each file is documented below).' }
+        @{ N = 'rawDataCsv';           D = 'The same data as CSV - one file per area, opens directly in Excel or a text editor.' }
+        @{ N = 'rawDataExcel';         D = 'Per-area Excel workbooks (one sheet of raw data each).' }
+        @{ N = 'rawDataTenantSummary'; D = 'A short, high-level summary of the tenant.' }
+        @{ N = 'Report\excelkpi';      D = 'The KPI workbook "KPI <stamp>.xlsx": dashboard, charts and one analysed sheet per area.' }
+        @{ N = 'Report\svg';           D = 'Vector maps of the tenant (open in a web browser). That folder has its own README.' }
+        @{ N = 'Report\pdf';           D = 'PDF copies of every SVG map, gathered in one place for sharing or printing.' }
+        @{ N = 'Report\visio';         D = 'The same maps as editable Visio drawings (.vsdx).' }
+        @{ N = 'Report\word';          D = 'The Word system-documentation report (.docx).' }
     )
 
     $sb = [System.Text.StringBuilder]::new()
