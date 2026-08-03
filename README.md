@@ -155,31 +155,30 @@ Entra\
 ## Screenshots
 
 ### Excel
-![Link](https://github.com/fardinbarashi/psAutoDocs/tree/main/githubRepoContentDeleteIfYouWant/screenshots)
 
 #### Dashboard:
 high-level summary of the tenant and the export.
-![Dashboard](https://github.com/fardinbarashi/psAutoDocs/tree/main/githubRepoContentDeleteIfYouWant/screenshots)
+![Dashboard](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/Excel%20dashboard.jpg)
 
 #### 01 Licenses — subscribed SKU inventory: 
 enabled, consumed and free units per licence.
-[Licenses — subscribed SKU inventory](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/Excel1.jpg)
+![Licenses — subscribed SKU inventory](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/Excel1.jpg)
 
 #### 02 Users per licence:
 how many users hold each licence.
-[Users per licence](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/Excel2.jpg)
+![Users per licence](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/Excel2.jpg)
 
 #### 03 Assigned vs Free:
 assigned versus still-available units per SKU.
-[Assigned vs Free](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel3.jpg)
+![Assigned vs Free](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel3.jpg)
 
 #### 04 Per department:
 users and licences broken down by department.
-[04 Per department](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel%204.jpg)
+![04 Per department](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel%204.jpg)
 
 #### 05 Top 10 SKU:
 the ten most-used licences.
-[Top 10 SKU](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel5.jpg)
+![Top 10 SKU](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel5.jpg)
 
 #### 06 Per office:
 users and licences broken down by office location.
@@ -192,27 +191,27 @@ users holding more than one licence.
 
 #### 08 Groups overview:
 group counts by type and source (security, Microsoft 365, dynamic, cloud vs on-prem).
-[Groups overview](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel8.jpg)
+![Groups overview](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel8.jpg)
 
 #### 09 Conditional Access:
 Conditional Access policies and their state (enabled, report-only, disabled).
-[Conditional Access](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel9.jpg)
+![Conditional Access](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel9.jpg)
 
 #### 10 App registrations:
 app registrations with owners, credential expiry and risk findings.
-[App registrations](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel10.jpg)
+![App registrations](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel10.jpg)
 
 #### 11 Enterprise apps:
 enterprise applications (service principals): single sign-on, permissions and risk.
-[Enterprise apps](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel11.jpg)
+![Enterprise apps](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel11.jpg)
 
 #### 12 RBAC:
 directory role assignments (active vs eligible, privileged roles).
-[RBAC](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel12.jpg)
+![RBAC](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel12.jpg)
 
 #### 13 Limits & recommendations:
 current usage against the documented Microsoft Entra service limits, colour-coded.
-[Limits & recommendations](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel13.jpg)
+![Limits & recommendations](https://github.com/fardinbarashi/psAutoDocs/blob/main/githubRepoContentDeleteIfYouWant/screenshots/excel13.jpg)
 
 
   
