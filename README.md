@@ -89,8 +89,9 @@ When downloading data
   documents as often as you like without re-collecting.
 
 SVG data
-- In large tenants the **Overview tree** map can get very tall; open it in
-  **Firefox** for the smoothest rendering. 
+- In large tenants the **Overview tree** map can get very tall; open it in 
+**Firefox** for the smoothest rendering. ![mapsSvgFiles](https://github.com/fardinbarashi/psAutoDocs/tree/main/githubRepoContentDeleteIfYouWant/data-mock%20(Lab%20Contoso)/svg)
+
 ---
 
 ## News
@@ -299,11 +300,6 @@ the tenant's self-service password-reset configuration.
 current usage against the documented Microsoft Entra service limits
 ![Service limits recommendations](https://raw.githubusercontent.com/fardinbarashi/psAutoDocs/refs/heads/main/githubRepoContentDeleteIfYouWant/screenshots/svg/Servicelimit.jpg)
 
-
----
-###
-Sourcefiles : 
-![Sourcefiles](https://github.com/fardinbarashi/psAutoDocs/tree/main/githubRepoContentDeleteIfYouWant/data-mock%20(Lab%20Contoso)/svg)
 
 ---
 
