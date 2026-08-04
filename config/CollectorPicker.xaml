@@ -245,8 +245,10 @@
                             <StackPanel>
                                 <TextBlock Text="Formats" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" Margin="0,0,0,10"/>
                                 <CheckBox x:Name="DocExcel" Content="Excel report (KPI workbook)" Margin="0,0,0,8"/>
-                                <CheckBox x:Name="DocVisio" Content="Visio maps (.vsdx)  (not implemented yet)" Margin="0,0,0,8"/>
-                                <CheckBox x:Name="DocSvg"   Content="SVG maps (.svg)" Margin="0,0,0,8"/>
+                                <CheckBox x:Name="DocVisio" Content="Visio maps  (not implemented yet)" Margin="0,0,0,8"/>
+                                <CheckBox x:Name="DocSvg"   Content="SVG maps" Margin="0,0,0,8"/>
+                                <CheckBox x:Name="DocHtml"  Content="HTML report" Margin="0,0,0,2"/>
+                                <TextBlock Text="Builds the SVG maps automatically if they aren't made yet." Foreground="{StaticResource TextSecondary}" FontSize="11" Margin="26,0,0,8" TextWrapping="Wrap"/>
                                 <CheckBox x:Name="DocWord"  Content="Word report  (not implemented yet)" Margin="0,0,0,8"/>
                                 <StackPanel Orientation="Horizontal" Margin="26,0,0,2">
                                     <TextBlock Text="Language:" VerticalAlignment="Center" Foreground="{StaticResource TextSecondary}" Margin="0,0,8,0"/>

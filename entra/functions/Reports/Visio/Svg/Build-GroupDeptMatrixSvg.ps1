@@ -62,7 +62,7 @@ function Build-GroupDeptMatrixSvg {
 
         # data-source box: leave a margin from the page edges (path only -> cheap)
         $dsW = [math]::Min($pageW - 2 * $marginSide, 12)
-        $dsBlock = Get-MapDataSourceBlock -SourceFolder $SourceFolder -BaseName 'GroupMembers' -WidthIn $dsW -FontSize 9 -PathOnly
+        $dsBlock = Get-MapDataSourceBlock -SourceFolder $SourceFolder -BaseName 'GroupMembers' -WidthIn $dsW -FontSize 10 -PathOnly
         $dsH = $dsBlock.Height
 
         $matH  = $titleH + $headH + $grps.Count * $rowH
@@ -73,7 +73,7 @@ function Build-GroupDeptMatrixSvg {
         $dsY = $topY - $tenantH / 2 - $gapY - $dsH / 2
 
         [void]$shapes.Add(@{ Id='datasource'; Kind='Rectangle'; Lines=$dsBlock.Lines; LinesTop=$true; TopInset=0.10
-                             X=$pageW/2; Y=$dsY; W=$dsW; H=$dsH; Fill='#F7F7F7'; Line='#888888'; FontSize=9 })
+                             X=$pageW/2; Y=$dsY; W=$dsW; H=$dsH; Fill='#F7F7F7'; Line='#888888'; FontSize=10 })
 
         $tenantLines = if ($tenant) {
             @(
@@ -85,7 +85,7 @@ function Build-GroupDeptMatrixSvg {
             )
         } else { @(@{ Text = 'Tenant'; Bold = $true; Align = 'start' }) }
         [void]$shapes.Add(@{ Id='tenant'; Kind='Rectangle'; Lines=$tenantLines
-                             X=$pageW/2; Y=$topY; W=6.0; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=12; Icon=$tenantIcon })
+                             X=$pageW/2; Y=$topY; W=$dsW; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=12; Icon=$tenantIcon })
 
         $gridLeft = ($pageW - $gridW) / 2
         $titleCy  = ($dsY - $dsH / 2 - $gapY) - $titleH / 2

@@ -28,7 +28,7 @@ function Build-GroupDeptListSvg {
 
     # shared "Data source" block (JSON path only) at the very top
     $dsW = [math]::Max(6.0, $pageW - 1)
-    $dsBlock = Get-MapDataSourceBlock -SourceFolder $SourceFolder -BaseName 'GroupMembers' -WidthIn $dsW -FontSize 8 -PathOnly
+    $dsBlock = Get-MapDataSourceBlock -SourceFolder $SourceFolder -BaseName 'GroupMembers' -WidthIn $dsW -FontSize 10 -PathOnly
     $dsH = $dsBlock.Height
     $nodeW = ($pageW - 2 - ($cols - 1) * $gapX) / $cols
     $innerW = $nodeW - 2 * $cardPad
@@ -47,9 +47,9 @@ function Build-GroupDeptListSvg {
         # never spill outside the box
         $avail = $innerW * 0.97
         $cardLines = @()
-        foreach ($p in @(Split-MapTextToWidth -Text "$grp" -AvailIn $avail -FontSize 9)) { $cardLines += @{ Text = $p; Bold = $true; Align = 'start' } }
-        foreach ($p in @(Split-MapTextToWidth -Text $statText -AvailIn $avail -FontSize 9)) { $cardLines += @{ Text = $p; Bold = $false; Align = 'start' } }
-        foreach ($ln in $lines) { foreach ($p in @(Split-MapTextToWidth -Text $ln -AvailIn $avail -FontSize 9)) { $cardLines += @{ Text = $p; Bold = $false; Align = 'start' } } }
+        foreach ($p in @(Split-MapTextToWidth -Text "$grp" -AvailIn $avail -FontSize 10)) { $cardLines += @{ Text = $p; Bold = $true; Align = 'start' } }
+        foreach ($p in @(Split-MapTextToWidth -Text $statText -AvailIn $avail -FontSize 10)) { $cardLines += @{ Text = $p; Bold = $false; Align = 'start' } }
+        foreach ($ln in $lines) { foreach ($p in @(Split-MapTextToWidth -Text $ln -AvailIn $avail -FontSize 10)) { $cardLines += @{ Text = $p; Bold = $false; Align = 'start' } } }
         $cardH = $cardPad + $cardLines.Count * $lineH + $cardPad + 0.12
         $cards += [pscustomobject]@{ Group = $grp; CardLines = $cardLines; Height = $cardH }
     }
@@ -79,10 +79,10 @@ function Build-GroupDeptListSvg {
         )
     } else { @(@{ Text = 'Tenant'; Bold = $true; Align = 'start' }) }
     $shapes += @{ Id='datasource'; Kind='Rectangle'; Lines=$dsBlock.Lines; LinesTop=$true; TopInset=0.10
-                  X=$pageW/2; Y=$dsY; W=$dsW; H=$dsH; Fill='#F7F7F7'; Line='#888888'; FontSize=8 }
+                  X=$pageW/2; Y=$dsY; W=$dsW; H=$dsH; Fill='#F7F7F7'; Line='#888888'; FontSize=10 }
 
     $shapes += @{ Id='tenant'; Kind='Rectangle'; Lines=$tenantLines
-                  X=$pageW/2; Y=$topY; W=5.4; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=11; Icon=$tenantIcon }
+                  X=$pageW/2; Y=$topY; W=$dsW; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=11; Icon=$tenantIcon }
 
     $legendY = $dsY - $dsH / 2 - $gapY - $legendH / 2
     $legendLines = @(

@@ -73,7 +73,7 @@ function Build-RbacMatrixSvg {
     $pageW = [math]::Max(11, $labelW + $maxCols * $colW + 2.0)
 
     $dsW = [math]::Max(6.0, [math]::Min($pageW - 1, 12.0))
-    $dsBlock = Get-MapDataSourceBlock -SourceFolder $SourceFolder -BaseName 'RBAC' -WidthIn $dsW -FontSize 9 -PathOnly
+    $dsBlock = Get-MapDataSourceBlock -SourceFolder $SourceFolder -BaseName 'RBAC' -WidthIn $dsW -FontSize 10 -PathOnly
     $dsH = $dsBlock.Height
 
     $matricesH = 0.0
@@ -88,7 +88,7 @@ function Build-RbacMatrixSvg {
     $dsY = $topY - $tenantH / 2 - $gapY - $dsH / 2
 
     $shapes += @{ Id='datasource'; Kind='Rectangle'; Lines=$dsBlock.Lines; LinesTop=$true; TopInset=0.10
-                  X=$pageW/2; Y=$dsY; W=$dsW; H=$dsH; Fill='#F7F7F7'; Line='#888888'; FontSize=9 }
+                  X=$pageW/2; Y=$dsY; W=$dsW; H=$dsH; Fill='#F7F7F7'; Line='#888888'; FontSize=10 }
 
     # summary counts for the tenant block: how many principals hold a privileged
     # (sensitive) role, out of everyone holding any role
@@ -111,7 +111,7 @@ function Build-RbacMatrixSvg {
         )
     } else { @(@{ Text = 'Tenant'; Bold = $true; Align = 'start' }) }
     $shapes += @{ Id='tenant'; Kind='Rectangle'; Lines=$tenantLines
-                  X=$pageW/2; Y=$topY; W=5.6; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=11; Icon=$tenantIcon }
+                  X=$pageW/2; Y=$topY; W=$dsW; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=11; Icon=$tenantIcon }
 
     $legendY = $dsY - $dsH / 2 - $gapY - $legendH / 2
     $legendLines = @(

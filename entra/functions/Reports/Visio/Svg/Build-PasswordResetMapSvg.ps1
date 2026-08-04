@@ -26,7 +26,7 @@ function Build-PasswordResetMapSvg {
 
     # shared "Data source" block (JSON path only) at the very top
     $dsW = [math]::Max(6.0, $pageW - 1)
-    $dsBlock = Get-MapDataSourceBlock -SourceFolder $SourceFolder -BaseName 'PasswordReset' -WidthIn $dsW -FontSize 8 -PathOnly
+    $dsBlock = Get-MapDataSourceBlock -SourceFolder $SourceFolder -BaseName 'PasswordReset' -WidthIn $dsW -FontSize 10 -PathOnly
     $dsH = $dsBlock.Height
     $pageH = [math]::Max(8.5, $marginTop + $dsH + $gapY + $tenantH + $gapY + $legendH + $gapY + $cardH + $marginBottom)
 
@@ -36,7 +36,7 @@ function Build-PasswordResetMapSvg {
     $today = Get-Date -Format 'yyyy-MM-dd'
 
     $shapes += @{ Id='datasource'; Kind='Rectangle'; Lines=$dsBlock.Lines; LinesTop=$true; TopInset=0.10
-                  X=$pageW/2; Y=$dsY; W=$dsW; H=$dsH; Fill='#F7F7F7'; Line='#888888'; FontSize=8 }
+                  X=$pageW/2; Y=$dsY; W=$dsW; H=$dsH; Fill='#F7F7F7'; Line='#888888'; FontSize=10 }
 
     $tenantLines = if ($tenant) {
         @(
@@ -48,7 +48,7 @@ function Build-PasswordResetMapSvg {
         )
     } else { @(@{ Text = 'Tenant'; Bold = $true; Align = 'start' }) }
     $shapes += @{ Id='tenant'; Kind='Rectangle'; Lines=$tenantLines
-                  X=$pageW/2; Y=$topY; W=5.6; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=11; Icon=$tenantIcon }
+                  X=$pageW/2; Y=$topY; W=$dsW; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=11; Icon=$tenantIcon }
 
     $legendY = $dsY - $dsH / 2 - $gapY - $legendH / 2
     $legendLines = @(

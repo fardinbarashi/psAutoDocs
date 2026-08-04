@@ -95,7 +95,7 @@ function Build-AppRegMapSvg {
 
     # shared "Data source" block (JSON path + field glossary) shown at the very top
     $dsW = [math]::Max(6.0, $pageW - 2 * $marginSide)
-    $dsBlock = Get-MapDataSourceBlock -SourceFolder $SourceFolder -BaseName 'AppRegEnterpriseApps' -WidthIn $dsW -FontSize 8 -LineH $lineH -Pad $cardPad -GridFields
+    $dsBlock = Get-MapDataSourceBlock -SourceFolder $SourceFolder -BaseName 'AppRegEnterpriseApps' -WidthIn $dsW -FontSize 10 -LineH $lineH -Pad $cardPad -GridFields
     $dsH = $dsBlock.Height
 
     # build each card's wrapped lines + height first. Long values (owner lists,
@@ -113,7 +113,7 @@ function Build-AppRegMapSvg {
 
         # title (bold), wrapped if long
         $lines = @()
-        foreach ($t in @(Split-TextToWidth -Text $app.AppName -AvailIn $cardAvailIn -FontSize 8)) {
+        foreach ($t in @(Split-TextToWidth -Text $app.AppName -AvailIn $cardAvailIn -FontSize 10)) {
             $lines += @{ Text = $t; Bold = $true; Align = 'start' }
         }
         # each "Field: value": bold field prefix stays on the first line, the
@@ -124,12 +124,12 @@ function Build-AppRegMapSvg {
                 $prefix  = $d.Substring(0, $i + 1) + ' '
                 $value   = $d.Substring($i + 1).Trim()
                 $reserve = Measure-MapTextWidth $prefix 8
-                $parts   = @(Split-TextToWidth -Text $value -AvailIn $cardAvailIn -FontSize 8 -FirstReserveIn $reserve)
+                $parts   = @(Split-TextToWidth -Text $value -AvailIn $cardAvailIn -FontSize 10 -FirstReserveIn $reserve)
                 $lines += @{ BoldPrefix = $prefix; Text = $parts[0]; Align = 'start' }
                 for ($k = 1; $k -lt $parts.Count; $k++) { $lines += @{ Text = $parts[$k]; Bold = $false; Align = 'start' } }
             }
             else {
-                foreach ($t in @(Split-TextToWidth -Text $d -AvailIn $cardAvailIn -FontSize 8)) {
+                foreach ($t in @(Split-TextToWidth -Text $d -AvailIn $cardAvailIn -FontSize 10)) {
                     $lines += @{ Text = $t; Bold = $false; Align = 'start' }
                 }
             }
@@ -166,7 +166,7 @@ function Build-AppRegMapSvg {
     $today = Get-Date -Format 'yyyy-MM-dd'
 
     $shapes += @{ Id='datasource'; Kind='Rectangle'; Lines=$dsBlock.Lines; LinesTop=$true; TopInset=0.10; Columns=$dsBlock.Columns; GridFrom=$dsBlock.GridFrom
-                  X=$pageW/2; Y=$dsY; W=$dsW; H=$dsH; Fill='#F7F7F7'; Line='#888888'; FontSize=8 }
+                  X=$pageW/2; Y=$dsY; W=$dsW; H=$dsH; Fill='#F7F7F7'; Line='#888888'; FontSize=10 }
 
     $expiredN = 0; $expiringN = 0
     foreach ($aud in $data.Audiences) { foreach ($a in $aud.Group) { if ($a.Health -eq 'expired') { $expiredN++ } elseif ($a.Health -eq 'expiring') { $expiringN++ } } }
@@ -181,7 +181,7 @@ function Build-AppRegMapSvg {
         )
     } else { @(@{ Text = 'Tenant'; Bold = $true; Align = 'start' }) }
     $shapes += @{ Id='tenant'; Kind='Rectangle'; Lines=$tenantLines
-                  X=$pageW/2; Y=$topY; W=5.8; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=11; Icon=$tenantIcon }
+                  X=$pageW/2; Y=$topY; W=$dsW; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=11; Icon=$tenantIcon }
 
     $legendY = $dsY - $dsH / 2 - $gapY - $legendH / 2
     $legendLines = @(

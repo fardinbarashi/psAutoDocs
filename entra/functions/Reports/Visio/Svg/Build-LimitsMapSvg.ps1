@@ -133,7 +133,7 @@ function Build-LimitsMapSvg {
     $noteCY = TopY ($mTop + $tenantH + $gapNote + $noteH / 2)
     $shapes += @{ Id = 'note'; Kind = 'Rectangle'; Fill = '#F7F7F7'; Line = '#CCCCCC';
                   Lines = @(
-                      @{ Text = 'Limits: Microsoft Entra service limits and restrictions (Microsoft Learn), via files\cache\EntraServiceLimits.json.'; Bold = $false; Align = 'start' }
+                      @{ BoldPrefix = 'Limits: '; Text = 'Microsoft Entra service limits and restrictions (Microsoft Learn), via files\cache\EntraServiceLimits.json.'; Align = 'start' }
                       @{ Text = 'Current values counted from the exported JSON for this tenant.'; Bold = $false; Align = 'start' }
                   );
                   X = $labelX0 + ($pageW - 2 * $marginX) / 2; Y = $noteCY; W = $pageW - 2 * $marginX; H = $noteH; FontSize = 10 }

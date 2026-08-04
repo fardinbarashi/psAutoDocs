@@ -68,7 +68,7 @@ function Build-ConditionalAccessMapSvg {
 
     # shared "Data source" block (JSON path + field glossary) shown at the very top
     $dsW = [math]::Max(6.0, $pageW - 2)
-    $dsBlock = Get-MapDataSourceBlock -SourceFolder $SourceFolder -BaseName 'ConditionalAccess' -WidthIn $dsW -FontSize 8 -GridFields
+    $dsBlock = Get-MapDataSourceBlock -SourceFolder $SourceFolder -BaseName 'ConditionalAccess' -WidthIn $dsW -FontSize 10 -GridFields
     $dsH = $dsBlock.Height
 
     # Usable text width inside a card (inches) for wrapping. Text is drawn to the
@@ -196,14 +196,14 @@ function Build-ConditionalAccessMapSvg {
         # pre-wrap into explicit lines: bold title, then bold key + wrapped value
         $lines = @()
         $titleText = "$($p.Name)  [$(Get-StateLabel $p.State)]"
-        foreach ($t in @(Split-TextToWidth -Text $titleText -AvailIn $cardAvailIn -FontSize 9)) {
+        foreach ($t in @(Split-TextToWidth -Text $titleText -AvailIn $cardAvailIn -FontSize 10)) {
             $lines += @{ Text = $t; Bold = $true; Align = 'start' }
         }
         # readable WHO block: each targeted user as a bold name line + "UPN: ..." line
-        $lines += @(Get-CaWhoLines -IncludeUsers $p.IncludeUsers -ExcludeUsers $p.ExcludeUsers -Roles $roles -Groups $grp -AvailIn $cardAvailIn -FontSize 9)
+        $lines += @(Get-CaWhoLines -IncludeUsers $p.IncludeUsers -ExcludeUsers $p.ExcludeUsers -Roles $roles -Groups $grp -AvailIn $cardAvailIn -FontSize 10)
         foreach ($r in $rows) {
             $reserve = Measure-MapTextWidth $r.Key 9
-            $parts   = @(Split-TextToWidth -Text $r.Text -AvailIn $cardAvailIn -FontSize 9 -FirstReserveIn $reserve)
+            $parts   = @(Split-TextToWidth -Text $r.Text -AvailIn $cardAvailIn -FontSize 10 -FirstReserveIn $reserve)
             $lines += @{ BoldPrefix = $r.Key; Text = $parts[0]; Align = 'start' }
             for ($k = 1; $k -lt $parts.Count; $k++) { $lines += @{ Text = $parts[$k]; Bold = $false; Align = 'start' } }
         }
@@ -242,10 +242,10 @@ function Build-ConditionalAccessMapSvg {
         )
     } else { @(@{ Text = 'Tenant'; Bold = $true; Align = 'start' }) }
     $shapes += @{ Id='tenant'; Kind='Rectangle'; Lines=$tenantLines
-                  X=$pageW/2; Y=$topY; W=5.6; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=11; Icon=$tenantIcon }
+                  X=$pageW/2; Y=$topY; W=$dsW; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=11; Icon=$tenantIcon }
 
     $shapes += @{ Id='datasource'; Kind='Rectangle'; Lines=$dsBlock.Lines; LinesTop=$true; TopInset=0.10; Columns=$dsBlock.Columns; GridFrom=$dsBlock.GridFrom
-                  X=$pageW/2; Y=$dsY; W=$dsW; H=$dsH; Fill='#F7F7F7'; Line='#888888'; FontSize=8 }
+                  X=$pageW/2; Y=$dsY; W=$dsW; H=$dsH; Fill='#F7F7F7'; Line='#888888'; FontSize=10 }
 
     $legendY = $dsY - $dsH / 2 - $gapY - $legendH / 2
     $legendLines = @(

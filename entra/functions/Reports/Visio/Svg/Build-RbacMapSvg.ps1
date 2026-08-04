@@ -53,7 +53,7 @@ function Build-RbacMapSvg {
 
     # shared "Data source" block (JSON path + field glossary) shown at the very top
     $dsW = [math]::Max(6.0, $pageW - 1)
-    $dsBlock = Get-MapDataSourceBlock -SourceFolder $SourceFolder -BaseName 'RBAC' -WidthIn $dsW -FontSize 8 -GridFields -GridMaxColumns 3
+    $dsBlock = Get-MapDataSourceBlock -SourceFolder $SourceFolder -BaseName 'RBAC' -WidthIn $dsW -FontSize 10 -GridFields -GridMaxColumns 3
     $dsH = $dsBlock.Height
 
     $cleanName = { param($p) $s = "$p"; if ($s -match '^(.*?)\s*<') { $matches[1].Trim() } else { $s.Trim() } }
@@ -122,7 +122,7 @@ function Build-RbacMapSvg {
     $topY   = $pageH - $marginTop - $tenantH / 2
     $dsY  = $topY - $tenantH / 2 - $gapY - $dsH / 2
     $shapes += @{ Id='datasource'; Kind='Rectangle'; Lines=$dsBlock.Lines; LinesTop=$true; TopInset=0.10; Columns=$dsBlock.Columns; GridFrom=$dsBlock.GridFrom
-                  X=$pageW/2; Y=$dsY; W=$dsW; H=$dsH; Fill='#F7F7F7'; Line='#888888'; FontSize=8 }
+                  X=$pageW/2; Y=$dsY; W=$dsW; H=$dsH; Fill='#F7F7F7'; Line='#888888'; FontSize=10 }
 
     $tenantLines = if ($tenant) {
         @(
@@ -134,7 +134,7 @@ function Build-RbacMapSvg {
         )
     } else { @(@{ Text = 'Tenant'; Bold = $true; Align = 'start' }) }
     $shapes += @{ Id='tenant'; Kind='Rectangle'; Lines=$tenantLines
-                  X=$pageW/2; Y=$topY; W=6.6; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=14; Icon=$tenantIcon }
+                  X=$pageW/2; Y=$topY; W=$dsW; H=$tenantH; Fill='#0F6CBD'; Line='#0B4C87'; FontSize=14; Icon=$tenantIcon }
 
     $legendY = $dsY - $dsH / 2 - $gapY - $legendH / 2
     $legendLines = @(

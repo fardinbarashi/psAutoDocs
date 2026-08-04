@@ -107,6 +107,7 @@ function Show-CollectorPicker {
     $docVisio = $window.FindName('DocVisio')
     $docSvg   = $window.FindName('DocSvg')
     $docWord  = $window.FindName('DocWord')
+    $docHtml  = $window.FindName('DocHtml')
 
     # Populate the Word language list from the folders under wordTemplates, so
     # adding a language folder (en, sv, es, ...) makes it selectable here.
@@ -147,6 +148,7 @@ function Show-CollectorPicker {
                 if ($docVisio.IsChecked) { $formats += 'Visio' }
                 if ($docSvg.IsChecked)   { $formats += 'Svg' }
                 if ($docWord.IsChecked)  { $formats += 'Word' }
+                if ($docHtml.IsChecked)  { $formats += 'Html' }
                 [pscustomobject]@{ Action = 'ReportDocs'; Formats = $formats; SourceFolder = $chosen }
             }
             default {

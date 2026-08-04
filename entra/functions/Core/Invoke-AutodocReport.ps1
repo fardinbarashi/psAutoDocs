@@ -7,7 +7,7 @@ function Invoke-AutodocReport {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory)][string]$EntraRoot,
-        [Parameter(Mandatory)][ValidateSet('Excel','Visio','Svg','Word')][string]$Kind,
+        [Parameter(Mandatory)][ValidateSet('Excel','Visio','Svg','Word','Html')][string]$Kind,
         [string]$SourceFolder
     )
 
@@ -60,23 +60,7 @@ function Invoke-AutodocReport {
                     Write-Host "No export folder to build a map from - run a collection first." -ForegroundColor Yellow
                 } else {
                     Write-Host "Building SVG maps from: $src" -ForegroundColor Cyan
-                    Build-LicenceMapSvg       -SourceFolder $src | Out-Null   # licences
-                    Build-OrgMapSvg           -SourceFolder $src | Out-Null   # organisation
-                    Build-GroupsMapSvg        -SourceFolder $src | Out-Null   # groups by category + mail
-                    Build-GroupOwnerMapSvg         -SourceFolder $src | Out-Null   # group ownership
-                    Build-GroupDeptListSvg    -SourceFolder $src | Out-Null   # group -> department (list)
-                    Build-GroupDeptMatrixSvg  -SourceFolder $src | Out-Null   # group x department (matrix)
-                    Build-ConditionalAccessMapSvg -SourceFolder $src | Out-Null   # CA policies
-                    Build-AppRegMapSvg        -SourceFolder $src | Out-Null   # app registrations
-                    Build-EnterpriseAppMapSvg -SourceFolder $src | Out-Null   # enterprise apps (SSO)
-                    Build-DomainMapSvg   -SourceFolder $src | Out-Null   # verified domains
-                    Build-RbacMapSvg     -SourceFolder $src | Out-Null   # RBAC roles (bands)
-                    Build-RbacMatrixSvg  -SourceFolder $src | Out-Null   # RBAC role x principal matrix
-                    Build-UsersMapSvg    -SourceFolder $src | Out-Null   # user breakdowns
-                    Build-PasswordResetMapSvg -SourceFolder $src | Out-Null   # SSPR configuration
-                    Build-LimitsMapSvg   -SourceFolder $src | Out-Null   # service limits & recommendations
-                    Build-OverviewMapSvg -SourceFolder $src -Style hub  | Out-Null   # one-page overview (hub)
-                    Build-OverviewMapSvg -SourceFolder $src -Style tree | Out-Null   # full expanded tree
+                    Build-EntraSvgMaps -SourceFolder $src | Out-Null
                     Write-SvgReadme -SvgFolder (Join-Path $src 'Report\svg')                 # README describing the SVG files
                     # PDF copies of every map, into a pdf subfolder.
                     $svgFolder = Join-Path $src 'Report\svg'
@@ -93,6 +77,16 @@ function Invoke-AutodocReport {
                 }
             }
             'Word'  { Build-EntraWordReport  -ExportsRoot $exportsRoot @extra; if ($src) { $outFolder = Join-Path $src 'Report\word' } }
+            'Html'  {
+                if (-not $src) {
+                    Write-Host "No export folder to build an HTML report from - run a collection first." -ForegroundColor Yellow
+                } else {
+                    Write-Host "Building HTML report from: $src" -ForegroundColor Cyan
+                    Build-EntraSvgMaps    -SourceFolder $src | Out-Null   # ensure the maps exist
+                    Build-EntraHtmlReport -SourceFolder $src | Out-Null   # inline them into one HTML
+                    $outFolder = Join-Path $src 'Report\html'
+                }
+            }
         }
 
         # open the folder holding the freshly built files
