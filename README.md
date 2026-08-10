@@ -19,7 +19,7 @@ Word and Visio output aren't finished yet, and things may change between version
 - [Roadmap](#roadmap)
 
 ---
-Automated documentation for 
+# Automated documentation : 
 
 - **Microsoft Entra ID**.
 ```
@@ -304,11 +304,14 @@ current usage against the documented Microsoft Entra service limits
 ---
 
 ## Roadmap
-- Implent more Service limits & recommendations.
-- if add hybrid Entra connect helth
-- Implement **Visio** map export .
-- Implement the **Word** system-documentation.
-- Automated documentation of **Windows Servers** — installed roles and
+1. Buggfix for App-reg. Wrong date ? 
+2. Implement the **Word** system-documentation.
+3. Implement **Visio** map export .
+
+4. Implent more Service limits & recommendations.
+5. if add hybrid Entra connect helth
+
+Last. Automated documentation of **Windows Servers** — installed roles and
   configurations.
 
 
