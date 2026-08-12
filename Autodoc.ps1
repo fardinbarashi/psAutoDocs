@@ -49,7 +49,8 @@ $runAction = {
                 Write-Host "No formats selected - tick at least one (Excel, Visio, SVG, Word)." -ForegroundColor Yellow
             } else {
                 foreach ($fmt in $fmts) {
-                    Invoke-AutodocReport -EntraRoot $EntraRoot -Kind $fmt -SourceFolder $request.SourceFolder
+                    Invoke-AutodocReport -EntraRoot $EntraRoot -Kind $fmt -SourceFolder $request.SourceFolder `
+                        -WordLanguage $request.WordLanguage -WordCompanyLogo $request.WordCompanyLogo -WordClientLogo $request.WordClientLogo
                 }
             }
         }

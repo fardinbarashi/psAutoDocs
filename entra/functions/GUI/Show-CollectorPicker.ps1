@@ -119,6 +119,30 @@ function Show-CollectorPicker {
     if ($wordLang.Items.Contains('en')) { $wordLang.SelectedItem = 'en' }
     elseif ($wordLang.Items.Count -gt 0) { $wordLang.SelectedIndex = 0 }
 
+    # optional logo pickers for the Word cover page.
+    # Uses the WPF-native dialog (no WinForms load) and copies the picked file into
+    # files\cache\wordTemplates\template\img so the Word builder reads it from there.
+    $wordCompanyLogo = $window.FindName('WordCompanyLogo')
+    $wordClientLogo  = $window.FindName('WordClientLogo')
+    $logoImgDir = Join-Path (Split-Path (Split-Path $PSScriptRoot)) 'files\cache\wordTemplates\template\img'
+    $pickLogo = {
+        param($textbox, $baseName)
+        $ofd = New-Object Microsoft.Win32.OpenFileDialog
+        $ofd.Filter = 'Images (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg|All files (*.*)|*.*'
+        if ($ofd.ShowDialog() -eq $true) {
+            try {
+                if (-not (Test-Path $logoImgDir)) { New-Item -Path $logoImgDir -ItemType Directory -Force | Out-Null }
+                Get-ChildItem -Path $logoImgDir -Filter "$baseName.*" -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
+                $dest = Join-Path $logoImgDir ($baseName + [System.IO.Path]::GetExtension($ofd.FileName))
+                Copy-Item -LiteralPath $ofd.FileName -Destination $dest -Force
+                $textbox.Text = $dest
+            }
+            catch { $textbox.Text = $ofd.FileName }
+        }
+    }
+    $window.FindName('BtnCompanyLogo').Add_Click({ & $pickLogo $wordCompanyLogo 'companylogo' })
+    $window.FindName('BtnClientLogo').Add_Click({ & $pickLogo $wordClientLogo 'clientlogo' })
+
     $btnRun      = $window.FindName('BtnRun')
 
     $window.FindName('BtnAll').Add_Click( { foreach ($c in $list.Children) { $c.IsChecked = $true } } )
@@ -149,7 +173,7 @@ function Show-CollectorPicker {
                 if ($docSvg.IsChecked)   { $formats += 'Svg' }
                 if ($docWord.IsChecked)  { $formats += 'Word' }
                 if ($docHtml.IsChecked)  { $formats += 'Html' }
-                [pscustomobject]@{ Action = 'ReportDocs'; Formats = $formats; SourceFolder = $chosen }
+                [pscustomobject]@{ Action = 'ReportDocs'; Formats = $formats; SourceFolder = $chosen; WordLanguage = [string]$wordLang.SelectedItem; WordCompanyLogo = [string]$wordCompanyLogo.Text; WordClientLogo = [string]$wordClientLogo.Text }
             }
             default {
                 $selectedCollectors = @(foreach ($c in $list.Children) { if ($c.IsChecked) { [string]$c.Tag } })

@@ -115,3 +115,59 @@ function Convert-SvgToPdf {
     Write-Host "  PDF: no Edge/Chrome or LibreOffice available to convert $(Split-Path $SvgPath -Leaf)." -ForegroundColor DarkYellow
     return $false
 }
+
+function Convert-SvgToPng {
+    <#
+        SVG map -> PNG (for embedding in the Word report). Prefers Edge/Chrome
+        headless screenshot (built into Windows), falls back to LibreOffice.
+        Returns $true on success.
+    #>
+    [CmdletBinding()]
+    param([Parameter(Mandatory)][string]$SvgPath, [Parameter(Mandatory)][string]$PngPath, [int]$MaxPx = 2600)
+
+    if (-not (Test-Path $SvgPath)) { return $false }
+    $dir = Split-Path $PngPath -Parent
+    if ($dir -and -not (Test-Path $dir)) { New-Item -Path $dir -ItemType Directory -Force | Out-Null }
+
+    # read the SVG's pixel size so the browser window matches the whole canvas
+    $w = 1600; $h = 1000
+    try {
+        $head = Get-Content -LiteralPath $SvgPath -TotalCount 6 -Raw
+        if ($head -match "<svg[^>]*\bwidth='([\d.]+)'[^>]*\bheight='([\d.]+)'") { $w = [int][double]$Matches[1]; $h = [int][double]$Matches[2] }
+        elseif ($head -match '<svg[^>]*\bwidth="([\d.]+)"[^>]*\bheight="([\d.]+)"') { $w = [int][double]$Matches[1]; $h = [int][double]$Matches[2] }
+    }
+    catch { }
+    if ($w -gt $MaxPx) { $h = [int]($h * $MaxPx / $w); $w = $MaxPx }
+    if ($w -lt 100) { $w = 1600 }
+    if ($h -lt 100) { $h = 1000 }
+
+    # 1) Edge or Chrome headless screenshot
+    $browser = Get-PdfConverterExe -Which Edge
+    if (-not $browser) { $browser = Get-PdfConverterExe -Which Chrome }
+    if ($browser) {
+        try {
+            $uri = 'file:///' + ((Resolve-Path $SvgPath).Path -replace '\\', '/')
+            $args = @('--headless=new', '--disable-gpu', '--hide-scrollbars', '--default-background-color=FFFFFFFF', "--screenshot=$PngPath", "--window-size=$w,$h", $uri)
+            Start-Process -FilePath $browser -ArgumentList $args -Wait -WindowStyle Hidden -ErrorAction Stop
+            if (Test-Path $PngPath) { return $true }
+        }
+        catch { }
+    }
+
+    # 2) LibreOffice fallback
+    $soffice = Get-PdfConverterExe -Which Soffice
+    if ($soffice) {
+        try {
+            $tmp = Join-Path ([System.IO.Path]::GetTempPath()) ([guid]::NewGuid().ToString('N'))
+            New-Item -ItemType Directory -Path $tmp -Force | Out-Null
+            & $soffice --headless --convert-to png --outdir $tmp $SvgPath 2>&1 | Out-Null
+            $made = Get-ChildItem -Path $tmp -Filter '*.png' | Select-Object -First 1
+            if ($made) { Copy-Item -LiteralPath $made.FullName -Destination $PngPath -Force; Remove-Item $tmp -Recurse -Force; return (Test-Path $PngPath) }
+            Remove-Item $tmp -Recurse -Force
+        }
+        catch { }
+    }
+
+    Write-Host "  PNG: no Edge/Chrome or LibreOffice available to convert $(Split-Path $SvgPath -Leaf)." -ForegroundColor DarkYellow
+    return $false
+}

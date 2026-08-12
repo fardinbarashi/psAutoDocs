@@ -8,7 +8,10 @@ function Invoke-AutodocReport {
     param(
         [Parameter(Mandatory)][string]$EntraRoot,
         [Parameter(Mandatory)][ValidateSet('Excel','Visio','Svg','Word','Html')][string]$Kind,
-        [string]$SourceFolder
+        [string]$SourceFolder,
+        [string]$WordLanguage,
+        [string]$WordCompanyLogo,
+        [string]$WordClientLogo
     )
 
     $logFolder = Join-Path $EntraRoot 'files\logs'
@@ -76,7 +79,14 @@ function Invoke-AutodocReport {
                     $outFolder = Join-Path $src 'Report\svg'
                 }
             }
-            'Word'  { Build-EntraWordReport  -ExportsRoot $exportsRoot @extra; if ($src) { $outFolder = Join-Path $src 'Report\word' } }
+            'Word'  {
+                $wx = @{}
+                if ($WordLanguage)    { $wx['Language'] = $WordLanguage }
+                if ($WordCompanyLogo) { $wx['ConsultantLogo'] = $WordCompanyLogo }
+                if ($WordClientLogo)  { $wx['CustomerLogo'] = $WordClientLogo }
+                Build-EntraWordReport -ExportsRoot $exportsRoot @extra @wx
+                if ($src) { $outFolder = Join-Path $src 'Report\word' }
+            }
             'Html'  {
                 if (-not $src) {
                     Write-Host "No export folder to build an HTML report from - run a collection first." -ForegroundColor Yellow

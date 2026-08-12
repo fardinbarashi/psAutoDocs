@@ -239,21 +239,44 @@
                     <DockPanel Margin="4,14,4,4">
                         <TextBlock DockPanel.Dock="Top" Text="Generate documents"
                                    FontSize="16" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" Margin="2,0,0,6"/>
-                        <TextBlock DockPanel.Dock="Top" TextWrapping="Wrap" Foreground="{StaticResource TextSecondary}" Margin="2,0,0,12"
-                                   Text="Pick the formats to build from the selected export, then click Run. Several can be built at once. These are built from the JSON files that have already been downloaded."/>
+                        <TextBlock DockPanel.Dock="Top" TextWrapping="Wrap" Foreground="{StaticResource TextSecondary}" Margin="2,0,0,12">
+                            <Run Text="Pick the formats to build from the selected export, then click Run."/>
+                            <Run Text=" (Several can be built at once. These are built from the folder rawDataJson.)" FontSize="11" Foreground="#666666"/>
+                        </TextBlock>
                         <Border Style="{StaticResource Card}" Padding="16" VerticalAlignment="Top">
                             <StackPanel>
                                 <TextBlock Text="Formats" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" Margin="0,0,0,10"/>
-                                <CheckBox x:Name="DocExcel" Content="Excel report (KPI workbook)" Margin="0,0,0,8"/>
-                                <CheckBox x:Name="DocVisio" Content="Visio maps  (not implemented yet)" Margin="0,0,0,8"/>
+                                <CheckBox x:Name="DocExcel" Margin="0,0,0,8"><TextBlock><Run Text="Excel report"/><Run Text="  (KPI workbook)" FontSize="11" Foreground="#666666"/></TextBlock></CheckBox>
+                                <CheckBox x:Name="DocVisio" Margin="0,0,0,8"><TextBlock><Run Text="Visio maps"/><Run Text="  (not implemented yet)" FontSize="11" Foreground="#666666"/></TextBlock></CheckBox>
                                 <CheckBox x:Name="DocSvg"   Content="SVG maps" Margin="0,0,0,8"/>
-                                <CheckBox x:Name="DocHtml"  Content="HTML report" Margin="0,0,0,2"/>
-                                <TextBlock Text="Builds the SVG maps automatically if they aren't made yet." Foreground="{StaticResource TextSecondary}" FontSize="11" Margin="26,0,0,8" TextWrapping="Wrap"/>
-                                <CheckBox x:Name="DocWord"  Content="Word report  (not implemented yet)" Margin="0,0,0,8"/>
+                                <CheckBox x:Name="DocHtml"  Margin="0,0,0,8"><TextBlock TextWrapping="Wrap"><Run Text="HTML report"/><Run Text="  (Builds the SVG maps automatically if they aren't made yet)" FontSize="11" Foreground="#666666"/></TextBlock></CheckBox>
+                                <CheckBox x:Name="DocWord"  Margin="0,0,0,8"><TextBlock><Run Text="Word report"/><Run Text="  (beta)" FontSize="11" Foreground="#666666"/></TextBlock></CheckBox>
                                 <StackPanel Orientation="Horizontal" Margin="26,0,0,2">
-                                    <TextBlock Text="Language:" VerticalAlignment="Center" Foreground="{StaticResource TextSecondary}" Margin="0,0,8,0"/>
+                                    <TextBlock Text="Language:" VerticalAlignment="Center" Foreground="{StaticResource TextSecondary}" Width="105" Margin="0,0,12,0"/>
                                     <ComboBox x:Name="WordLanguage" Width="170" Height="26" VerticalContentAlignment="Center"/>
                                 </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="26,6,0,2">
+                                    <TextBlock Text="Company logo:" VerticalAlignment="Center" Foreground="{StaticResource TextSecondary}" Width="105" Margin="0,0,12,0"/>
+                                    <Grid Width="240">
+                                        <TextBox x:Name="WordCompanyLogo" Height="26" VerticalContentAlignment="Center"/>
+                                        <TextBlock Text="optional" Foreground="#999999" Margin="8,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False">
+                                            <TextBlock.Style><Style TargetType="TextBlock"><Setter Property="Visibility" Value="Collapsed"/><Style.Triggers><DataTrigger Binding="{Binding Text, ElementName=WordCompanyLogo}" Value=""><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                    <Button x:Name="BtnCompanyLogo" Content="Browse…" Height="26" Margin="8,0,0,0" Padding="10,0"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="26,2,0,2">
+                                    <TextBlock Text="Client logo:" VerticalAlignment="Center" Foreground="{StaticResource TextSecondary}" Width="105" Margin="0,0,12,0"/>
+                                    <Grid Width="240">
+                                        <TextBox x:Name="WordClientLogo" Height="26" VerticalContentAlignment="Center"/>
+                                        <TextBlock Text="optional" Foreground="#999999" Margin="8,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False">
+                                            <TextBlock.Style><Style TargetType="TextBlock"><Setter Property="Visibility" Value="Collapsed"/><Style.Triggers><DataTrigger Binding="{Binding Text, ElementName=WordClientLogo}" Value=""><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                    <Button x:Name="BtnClientLogo" Content="Browse…" Height="26" Margin="8,0,0,0" Padding="10,0"/>
+                                </StackPanel>
+                                <TextBlock Foreground="#666666" FontSize="11" Margin="26,4,0,4" TextWrapping="Wrap"
+                                           Text="Copies the selected file to cache\wordTemplates\template\img (companylogo / clientlogo). Word reads the logos from there."/>
                             </StackPanel>
                         </Border>
                     </DockPanel>
